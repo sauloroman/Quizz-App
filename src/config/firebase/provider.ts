@@ -6,13 +6,13 @@ import {
     GoogleAuthProvider 
 } from "firebase/auth"
 import { FirebaseAuth } from "./config"
+import type { LoginWithEmailAndPassword, RegisterUserWithEmail } from "../../interfaces/auth.interface"
+import type { User } from "../../interfaces/quizzly.interface"
 
 const googleProvider = new GoogleAuthProvider()
 
 export const singInWithGoogle = async () => {
-
     try {
-        
         const result = await signInWithPopup( FirebaseAuth, googleProvider ) 
         const user = result.user
         const { displayName, email, photoURL, uid } = user
@@ -35,57 +35,43 @@ export const singInWithGoogle = async () => {
 
 }
 
-export type RegisterUserWithEmail = {
-    email: string,
-    password: string,
-    displayName: string,
-}
-
-export const registerUserWithEmail = async ({ email, password, displayName }: RegisterUserWithEmail) => {
-
+export const registerUserWithEmail = async ({ email, password, name }: RegisterUserWithEmail): Promise<Omit<User, 'password'>> => {
     try {
-
         const result = await createUserWithEmailAndPassword( FirebaseAuth, email, password )
-        const { uid, photoURL } = result.user
+        const { uid } = result.user
 
-        await updateProfile( FirebaseAuth.currentUser!, { displayName } )
+        await updateProfile( FirebaseAuth.currentUser!, { displayName: name } )
 
         return {
-            ok: true,
-            uid, displayName, email, photoURL
+            id: uid, 
+            name, 
+            email,
+            createdAt: new Date(result.user.metadata.creationTime!)
         }
 
     } catch ( error ) {
-        console.log(error)
-        return {
-            ok: false,
-            errorMessage: (error as Error).message
-        }
+        console.error(error)
+        throw error  
     }
-
 }
 
-export type LoginWithEmailAndPassword = {
-    email: string,
-    password: string,
-}
-
-export const loginWithEmailAndPassword = async ({ email, password }: LoginWithEmailAndPassword) => {
+export const loginWithEmailAndPassword = async ({ email, password }: LoginWithEmailAndPassword): Promise<Omit<User, 'password'>> => {
     try {
         const result = await signInWithEmailAndPassword( FirebaseAuth, email, password )
-        const { uid, displayName, photoURL } = result.user
+        const { uid, displayName: name } = result.user
+
+        console.log(result.user)
 
         return {
-            ok: true,
-            uid, displayName, email, photoURL
+            id: uid, 
+            name: name ?? 'Usuario sin nombre', 
+            email,
+            createdAt: new Date(result.user.metadata.creationTime!)
         }
 
     } catch( error ) {
         console.log(error)
-        return {
-            ok: false,
-            errorMessage: (error as Error).message 
-        }
+        throw error
     }
 
 }

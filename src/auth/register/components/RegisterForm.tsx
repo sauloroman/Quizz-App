@@ -4,12 +4,8 @@ import { Label } from '../../../shared/components/Label'
 import { Input } from '../../../shared/components/Input'
 import { FormErrorMessage } from '../../../shared/components/FormErrorMessage'
 import { SubmitButton } from '../../../shared/components/SubmitButton'
-
-interface RegisterFormI {
-    name: string
-    email: string
-    password: string
-}
+import { useAuth } from '../../../shared/hooks'
+import type { RegisterUserWithEmail } from '../../../interfaces/auth.interface'
 
 export const RegisterForm: React.FC = () => {
     
@@ -18,11 +14,13 @@ export const RegisterForm: React.FC = () => {
         register,
         reset,
         formState: { errors }
-    } = useForm<RegisterFormI>()
+    } = useForm<RegisterUserWithEmail>()
+
+    const { registerUser } = useAuth()
     
-    const onRegisterUser = (data: RegisterFormI) => {
-        console.log(data)
-        // Aquí irá la lógica de registro
+    const onRegisterUser = (data: RegisterUserWithEmail) => {
+        registerUser( data )
+        reset()
     }
 
     return (

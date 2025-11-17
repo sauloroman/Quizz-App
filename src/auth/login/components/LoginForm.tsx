@@ -4,6 +4,7 @@ import { Label } from '../../../shared/components/Label'
 import { Input } from '../../../shared/components/Input'
 import { FormErrorMessage } from '../../../shared/components/FormErrorMessage'
 import { SubmitButton } from '../../../shared/components/SubmitButton'
+import { useAuth } from '../../../shared/hooks'
 
 interface LoginFormI {
     email: string,
@@ -18,10 +19,12 @@ export const LoginForm: React.FC = () => {
         reset,
         formState: { errors }
     } = useForm<LoginFormI>()
+    const { loginUser } = useAuth()
     
     const onLoginUser = ( data: LoginFormI ) => {
-
-    }
+        loginUser( data )
+        reset()
+    }   
 
     return (
         <form onSubmit={handleSubmit(onLoginUser)} className='flex flex-col gap-3'>
