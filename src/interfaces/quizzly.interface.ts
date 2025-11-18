@@ -11,11 +11,17 @@ export interface Quiz {
   userId: string
   title: string
   description?: string
-  subject: 'HTML' | 'CSS' | 'JavaScript' | 'Accessibility'
+  subject: string
   color?: string
-  isPublic: boolean
   createdAt: Date
   updatedAt: Date
+}
+
+export interface CreateQuiz {
+  title: string
+  subject: string
+  description?: string
+  color?: string
 }
 
 export interface Question {
@@ -25,6 +31,12 @@ export interface Question {
   points: number
   order: number
   createdAt: Date
+}
+
+export interface CreateQuestion {
+  questionText: string,
+  points: number,
+  order: number
 }
 
 export interface Answer {

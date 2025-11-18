@@ -1,6 +1,6 @@
 import type { Dispatch } from "@reduxjs/toolkit"
-import { loginWithEmailAndPassword, registerUserWithEmail } from "../../config/firebase/provider"
-import { login, setIsLoading } from "./auth.slice"
+import { loginWithEmailAndPassword, logoutFirebase, registerUserWithEmail } from "../../config/firebase/provider"
+import { login, logout, setIsLoading } from "./auth.slice"
 import type { LoginWithEmailAndPassword, RegisterUserWithEmail } from "../../interfaces/auth.interface"
 import { setAlert } from "../ui/ui.slice"
 import { AlertType } from "../../interfaces/ui.interface"
@@ -60,6 +60,34 @@ export const startCreatingUserWithEmail = (data: RegisterUserWithEmail) => {
             dispatch(setAlert({
                 isOpen: true,
                 title: 'Error - Creación de Usuario',
+                text: formatErrorFromFirebase(error),
+                type: AlertType.error,
+            }))
+        } finally {
+            dispatch( setIsLoading( false ) )
+        }
+    }
+}
+
+export const startLoggingOutUser = () => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch( setIsLoading( true ) )
+        try {
+            await logoutFirebase()
+
+            dispatch(logout())
+            dispatch(setAlert({
+                isOpen: true,
+                title: 'Cierre de sesión',
+                text: 'Hasta la próxima 👋',
+                type: AlertType.success,
+            }))
+
+        } catch (error) {
+            console.error(error)
+            dispatch(setAlert({
+                isOpen: true,
+                title: 'Error - Cierre de sesión',
                 text: formatErrorFromFirebase(error),
                 type: AlertType.error,
             }))

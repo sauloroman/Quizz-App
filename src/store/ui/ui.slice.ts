@@ -1,18 +1,23 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { AlertType, Theme, type Alert } from "../../interfaces/ui.interface";
+import { AlertType, ModalNames, Theme, type Alert, type Modal } from "../../interfaces/ui.interface";
 
 interface UIState {
     theme: Theme,
     alert: Alert,
+    modal: Modal,
 }
 
 const initialState: UIState = {
     theme: Theme.dark,
     alert: {
-        isOpen: true,
+        isOpen: false,
         text: '',
         title: '',
         type: AlertType.warning
+    },
+    modal: {
+        isOpen: false,
+        name: ModalNames.pending
     }
 }
 
@@ -28,6 +33,10 @@ export const uiSlice = createSlice({
 
         setAlert: ( state, { payload }: PayloadAction<Alert> ) => {
             state.alert = payload
+        },
+
+        setModal: ( state, { payload }: PayloadAction<Modal>) => {
+            state.modal = payload
         }
 
     }
@@ -36,4 +45,5 @@ export const uiSlice = createSlice({
 export const {
     setTheme,
     setAlert,
+    setModal,
 } = uiSlice.actions

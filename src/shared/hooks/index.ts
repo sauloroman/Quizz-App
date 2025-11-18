@@ -1,2 +1,5 @@
 export { useTheme } from './useTheme'
 export { useAuth } from './useAuth'
+export { useAlert } from './useAlert'
+export { useQuiz } from './useQuiz'
+export { useModal } from './useModal'

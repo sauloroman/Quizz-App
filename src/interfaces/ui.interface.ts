@@ -16,3 +16,20 @@ export interface Alert {
     title: string,
     text: string
 }
+
+export interface MenuOption {
+    icon: string,
+    name: string,
+    color: string,
+    link: string,
+}
+
+export type ModalNames = 'confirmDeleteQuizz' | 'pending'
+export const ModalNames = {
+    confirmDeleteQuizz: 'confirmDeleteQuizz' as ModalNames,
+    pending: 'pending' as ModalNames
+}
+export interface Modal {
+    isOpen: boolean,
+    name: ModalNames,
+}
