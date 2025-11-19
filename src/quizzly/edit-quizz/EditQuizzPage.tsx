@@ -1,11 +1,11 @@
 import React from 'react'
 import { MainLayout } from '../../layout/MainLayout'
-import { CreateQuizzForm } from './components/CreateQuizzForm'
 import { useTheme } from '../../shared/hooks'
 import { useQuiz } from '../../shared/hooks/useQuiz'
 import { Spinner } from '../../shared/components/Spinner'
+import { EditQuizzForm } from './components/EditQuizzForm'
 
-export const CreateQuizzPage: React.FC = () => {  
+export const EditQuizzPage: React.FC = () => {  
   const { isDarkTheme } = useTheme()
   const { isLoading } = useQuiz()
   
@@ -20,13 +20,13 @@ export const CreateQuizzPage: React.FC = () => {
               <h1 className={`text-3xl sm:text-4xl font-bold ${
                 isDarkTheme ? 'text-gray-100' : 'text-gray-900'
               }`}>
-                Crear Nuevo Quizz
+                Editar Quizz
               </h1>
             </div>
             <p className={`text-sm sm:text-base ${
               isDarkTheme ? 'text-gray-400' : 'text-gray-600'
             }`}>
-              Completa los datos generales de tu quizz
+              Cambia la información general de tu quizz
             </p>
           </div>
 
@@ -62,7 +62,7 @@ export const CreateQuizzPage: React.FC = () => {
                     </p>
                   </div>
                 )
-                : (<CreateQuizzForm />)
+                : (<EditQuizzForm />)
               }
             </div>
           </section>
@@ -73,7 +73,7 @@ export const CreateQuizzPage: React.FC = () => {
               : 'bg-blue-50 border-blue-200 text-blue-900'
           }`}>
             <p className='text-sm'>
-              💡 <span className='font-medium'>Tip:</span> Completa toda la información requerida para que tu quizz sea visible a otros usuarios.
+              💡 <span className='font-medium'>Tip:</span> Actualiza la información que ya no deseas en tu quizz para mejorar tu estudio.
             </p>
           </div>
 

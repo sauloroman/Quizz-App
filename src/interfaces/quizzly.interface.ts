@@ -26,6 +26,14 @@ export interface CreateQuiz {
   image?: string
 }
 
+export interface EditQuiz {
+  title?: string,
+  subject?: string,
+  description?: string,
+  color?: string,
+  image?: string
+}
+
 export interface Question {
   id: string
   quizId: string

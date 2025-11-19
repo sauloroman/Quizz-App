@@ -11,7 +11,7 @@ export const QuestionAccordion: React.FC<Props> = ({ isDarkTheme, isOpen, answer
     return (
         <>
             {isOpen && (
-                <div className={`border-t transition-all ${isDarkTheme ? 'border-gray-700 bg-gray-700/50' : 'border-gray-200 bg-gray-50'}`}>
+                <div className={`mt-5 border-t transition-all ${isDarkTheme ? 'border-gray-700 bg-gray-700/50' : 'border-gray-200 bg-gray-50'}`}>
                     <div className="p-5">
                         <div className="space-y-3">
                             <h5 className={`text-sm font-semibold ${isDarkTheme ? 'text-gray-200' : 'text-gray-800'}`}>

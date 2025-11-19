@@ -4,12 +4,17 @@ export const useNavigate = () => {
 
     const navigate = useRouterNavigate()
 
+    const returnPage = () => {
+        navigate(-1)
+    }
+
     const goToPage = ( page: string ) => {
         navigate(`/${page}`)
     }
 
     return {
-        goToPage
+        goToPage,
+        returnPage,
     }
 
 }

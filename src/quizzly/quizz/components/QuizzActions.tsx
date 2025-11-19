@@ -1,6 +1,7 @@
 import React from 'react'
-import { useTheme } from '../../../shared/hooks'
+import { useModal, useNavigate, useTheme } from '../../../shared/hooks'
 import { SubmitButton } from '../../../shared/components/SubmitButton'
+import { ModalNames } from '../../../interfaces/ui.interface'
 
 interface Action {
     icon: string
@@ -9,22 +10,25 @@ interface Action {
 }
 
 interface Props {
+    quizId: string,
     quizColor: string
 }
 
-export const QuizzActions: React.FC<Props> = ({ quizColor }) => {
+export const QuizzActions: React.FC<Props> = ({ quizId, quizColor }) => {
     const { isDarkTheme } = useTheme()
+    const { goToPage } = useNavigate()
+    const { onOpenModal } = useModal()
 
     const actions: Action[] = [
         {
             icon: 'bxr bx-pencil',
             label: 'Editar',
-            onClick: () => console.log('Editar')
+            onClick: () => goToPage(`edit-quizz/${quizId}`)
         },
         {
             icon: 'bxr bx-trash',
             label: 'Eliminar',
-            onClick: () => console.log('Eliminar')
+            onClick: () => onOpenModal(ModalNames.confirmDeleteQuizz)
         }
     ]
 

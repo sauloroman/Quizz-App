@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { QuizzCover } from './components/QuizzCover'
-import { useAuth, useQuiz } from '../../shared/hooks'
+import { useAuth, useModal, useQuiz } from '../../shared/hooks'
 import { MainLayout } from '../../layout/MainLayout'
 import { QuizzInfo } from './components/QuizzInfo'
 import { QuizzListQuestions } from './components/QuizzListQuestions'
@@ -9,12 +9,15 @@ import { useQuestion } from '../../shared/hooks/useQuestion'
 import { QuizzEmptyQuestions } from './components/QuizzEmptyQuestions'
 import { QuizzActions } from './components/QuizzActions'
 import { Spinner } from '../../shared/components/Spinner'
+import { ModalNames } from '../../interfaces/ui.interface'
+import { QuizConfirmDelete } from './components/QuizConfirmDelete'
 
 export const Quizz: React.FC = () => {
 
   const { quizSelected } = useQuiz()
   const { questions, getQuestionsFromQuiz, isLoading } = useQuestion()
   const { user } = useAuth()
+  const { modal: { isOpen: modalIsOpen, name: modalName } } = useModal()
   
   if (!quizSelected || !user ) return null
 
@@ -42,7 +45,10 @@ export const Quizz: React.FC = () => {
               createdAt={quizSelected.createdAt}
               updatedAt={quizSelected.updatedAt}
             />
-            <QuizzActions quizColor={quizSelected.color ?? '#000000'}/>
+            <QuizzActions 
+              quizId={quizSelected.id}
+              quizColor={quizSelected.color ?? '#000000'}
+            />
           </div>
           <div className="col-span-5">
             <QuizzHeaderQuestionsCounter quizColor={quizSelected.color ?? '#000000'} questionsCounter={questions.length}/>
@@ -58,6 +64,7 @@ export const Quizz: React.FC = () => {
           </div>
         </main>
       </div>
+      { modalIsOpen && modalName === ModalNames.confirmDeleteQuizz && <QuizConfirmDelete />}
     </MainLayout>
   )
 }

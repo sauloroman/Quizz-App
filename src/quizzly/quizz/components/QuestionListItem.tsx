@@ -28,7 +28,7 @@ export const QuestionListItem: React.FC<Props> = ({ question, index }) => {
                 onClick={toggleAccordion}
                 className="p-5 cursor-pointer"
             >
-                <div className="flex items-start gap-4 mb-5">
+                <div className="flex items-start gap-4">
                     <div className={`flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm shrink-0 ${isDarkTheme
                         ? 'bg-gray-700 text-gray-300'
                         : 'bg-gray-100 text-gray-700'

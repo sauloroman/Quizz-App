@@ -1,6 +1,7 @@
 import React from 'react'
 import { formatDate } from '../../../shared/helpers/format-date'
 import { useNavigate, useQuiz, useTheme } from '../../../shared/hooks'
+import { IconButton } from '../../../shared/components/IconButton'
 
 interface Props {
   id: string,
@@ -8,7 +9,7 @@ interface Props {
   description: string,
   subject: string,
   color: string,
-  createdAt: Date
+  createdAt: Date,
 }
 
 export const QuizItem: React.FC<Props> = ({ 
@@ -61,7 +62,7 @@ export const QuizItem: React.FC<Props> = ({
           </p>
         )}
         
-        <div className="flex flex-col gap-2 mb-4 flex-1">
+        <div className="flex flex-col gap-2 flex-1">
           <span
             className={`inline-flex items-center w-fit px-3 py-1 rounded-full text-xs font-medium ${
               isDarkTheme ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-700'
@@ -75,8 +76,18 @@ export const QuizItem: React.FC<Props> = ({
           }`}>
             {formatDate(createdAt)}
           </span>
-        </div>        
+        </div>  
       </div>
+      
+      <div className="flex justify-end p-4 pb-2">
+          <IconButton onClick={onSelectQuiz}>
+            <i className='bxr bx-eye'></i> 
+          </IconButton>
+          <IconButton onClick={onSelectQuiz}>
+            <i className='bxr bx-book'></i> 
+          </IconButton>
+      </div>
+      
     </li>
   )
 }

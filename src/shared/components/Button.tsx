@@ -15,7 +15,7 @@ export const Button: React.FC<Props> = ({ text, submit = false, className = '', 
             type={ submit ? 'submit' : 'button' }
             className={`
                 cursor-pointer
-                w-full px-6 py-3 rounded-lg
+                w-full px-4 py-2 rounded-lg
                 font-semibold
                 transition-all duration-200
                 focus:outline-none focus:ring-2 focus:ring-offset-2

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAuth, useTheme } from '../hooks'
+import { useAuth, useNavigate, useTheme } from '../hooks'
 import logoDark from '../../assets/img/logo-dark-mode.png'
 import { Link, NavLink } from 'react-router-dom'
 
@@ -11,6 +11,7 @@ export const Header: React.FC<Props> = ({ title }) => {
 
     const { isDarkTheme, activateDarkTheme, activateLightTheme } = useTheme()
     const { logoutUser } = useAuth()
+    const { returnPage } = useNavigate()
 
     const toggleTheme = () => {
         if (isDarkTheme) {
@@ -38,8 +39,11 @@ export const Header: React.FC<Props> = ({ title }) => {
                 />
                 <div className='flex items-center gap-2'>
                     <NavLink to={"/"} className={`flex items-center justify-center`}>
-                        <i className={`bx bx-chevron-left ${isDarkTheme ? 'text-white' : 'text-gray-800'} text-4xl`}></i>
+                        <i className={`bx bxs-home ${isDarkTheme ? 'text-white' : 'text-gray-800'} text-xl`}></i>
                     </NavLink>
+                    <button onClick={returnPage} className='flex items-center cursor-pointer justify-center'>
+                        <i className={`bx bx-chevron-left ${isDarkTheme ? 'text-white' : 'text-gray-800'} text-xl`}></i>
+                    </button>
                     <h2 className={`font-bold ${isDarkTheme ? 'text-gray-100' : 'text-gray-800'}`}>{title}</h2>
                 </div>
             </div>

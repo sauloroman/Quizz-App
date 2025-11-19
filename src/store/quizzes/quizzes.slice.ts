@@ -22,6 +22,19 @@ export const quizzeSlice = createSlice({
             state.quizes.unshift( payload )
         },
 
+        updateQuiz: ( state, {payload}: PayloadAction<{ quizId: string, changes: Quiz}>) => {
+            state.quizes = state.quizes.map( quiz => {
+                if ( quiz.id === payload.quizId ) {
+                    return payload.changes
+                }
+                return quiz
+            })
+        },
+
+        deleteQuiz: ( state, {payload}: PayloadAction<{ quizId: string }> ) => {
+            state.quizes = state.quizes.filter( quiz => quiz.id !== payload.quizId )
+        },
+
         setQuizzes: ( state, {payload}: PayloadAction<Quiz[]> ) => {
             state.quizes = payload
         },
@@ -39,6 +52,8 @@ export const quizzeSlice = createSlice({
 
 export const {
     addQuiz,
+    deleteQuiz,
+    updateQuiz,
     setQuizzes,
     setIsLoading,
     setQuizSelected,
