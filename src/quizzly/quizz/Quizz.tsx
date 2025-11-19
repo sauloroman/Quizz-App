@@ -7,19 +7,19 @@ import { QuizzListQuestions } from './components/QuizzListQuestions'
 import { QuizzHeaderQuestionsCounter } from './components/QuizzHeaderQuestionsCounter'
 import { useQuestion } from '../../shared/hooks/useQuestion'
 import { QuizzEmptyQuestions } from './components/QuizzEmptyQuestions'
+import { QuizzActions } from './components/QuizzActions'
+import { Spinner } from '../../shared/components/Spinner'
 
 export const Quizz: React.FC = () => {
 
   const { quizSelected } = useQuiz()
-  const { questions, getQuestionsFromQuiz } = useQuestion()
+  const { questions, getQuestionsFromQuiz, isLoading } = useQuestion()
   const { user } = useAuth()
   
   if (!quizSelected || !user ) return null
 
   useEffect(() => {
-    if ( questions.length === 0 ) {
-      getQuestionsFromQuiz(quizSelected.id)
-    }
+    getQuestionsFromQuiz(quizSelected.id)
   }, [quizSelected.id])
 
   return (
@@ -42,13 +42,18 @@ export const Quizz: React.FC = () => {
               createdAt={quizSelected.createdAt}
               updatedAt={quizSelected.updatedAt}
             />
+            <QuizzActions quizColor={quizSelected.color ?? '#000000'}/>
           </div>
           <div className="col-span-5">
             <QuizzHeaderQuestionsCounter quizColor={quizSelected.color ?? '#000000'} questionsCounter={questions.length}/>
             {
               questions.length === 0
               ? (<QuizzEmptyQuestions />)
-              : (<QuizzListQuestions />)
+              : (
+                isLoading
+                ? (<div className='my-12 lg:h-80 flex justify-center items-center'><Spinner /></div>)
+                : (<QuizzListQuestions questions={questions} />)
+              )
             }
           </div>
         </main>

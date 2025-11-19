@@ -10,7 +10,7 @@ interface Props {
 
 export const QuizzHeaderQuestionsCounter: React.FC<Props> = ({ quizColor, questionsCounter }) => {
   const { isDarkTheme } = useTheme()
-  const { activateNewQuestionArea } = useQuestion()
+  const { activateNewQuestionArea, creatingNewQuestion } = useQuestion()
 
   return (
     <header className={`rounded-lg border transition-colors p-6 mb-4 ${
@@ -38,10 +38,10 @@ export const QuizzHeaderQuestionsCounter: React.FC<Props> = ({ quizColor, questi
         </div>
         <div className='w-64'>
           <SubmitButton 
-            onClick={() => activateNewQuestionArea(true)}
+            onClick={() => activateNewQuestionArea(!creatingNewQuestion)}
             style={{ backgroundColor: quizColor }}
             className="hover:opacity-90 transition-opacity"
-            text='+ Crear pregunta'
+            text={`${creatingNewQuestion ? 'Cancelar Creación' : '+ Crear pregunta'}`}
           />
         </div>
       </div>

@@ -1,8 +1,8 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { Question } from "../../interfaces/quizzly.interface";
+import type { QuestionWithAnswers } from "../../interfaces/quizzly.interface";
 
 interface QuestionState {
-    questions: Question[],
+    questions: QuestionWithAnswers[],
     isLoading: boolean,
     creatingNewQuestion: boolean,
 }
@@ -22,11 +22,11 @@ export const questionsSlice = createSlice({
             state.isLoading = payload
         },
 
-        setQuestions: ( state, {payload}: PayloadAction<Question[]>) => {
+        setQuestions: ( state, {payload}: PayloadAction<QuestionWithAnswers[]>) => {
             state.questions = payload
         },
 
-        addQuestion: ( state, {payload}: PayloadAction<Question>) => {
+        addQuestion: ( state, {payload}: PayloadAction<QuestionWithAnswers>) => {
             state.questions.unshift(payload)
         },
 

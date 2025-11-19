@@ -24,11 +24,11 @@ export const QuizzInfo: React.FC<Props> = ({
     const { isDarkTheme } = useTheme()
 
     return (
-        <div className={`sticky top-20 rounded-lg border transition-colors ${
+        <div className={`top-20 rounded-lg border transition-colors ${
             isDarkTheme
                 ? 'bg-gray-800 border-gray-700'
                 : 'bg-white border-gray-200'
-        } overflow-hidden`}>
+        }`}>
             <div 
                 className="h-2 w-full"
                 style={{ backgroundColor: color }}

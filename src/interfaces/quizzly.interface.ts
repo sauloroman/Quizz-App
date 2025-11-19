@@ -31,7 +31,6 @@ export interface Question {
   quizId: string
   questionText: string
   points: number
-  order: number
   createdAt: Date
 }
 
@@ -46,7 +45,22 @@ export interface Answer {
   questionId: string
   answerText: string
   isCorrect: boolean
-  order: number
+}
+
+export interface CreateAnswer {
+  answerText: string,
+  isCorrect: boolean,
+}
+
+export interface CreateQuestionWithAnswers {
+  question: CreateQuestion,
+  answers: CreateAnswer[]
+  correctAnswer: string,
+}
+
+export interface QuestionWithAnswers {
+  question: Question,
+  answers: Answer[]
 }
 
 export interface QuizAttempt {

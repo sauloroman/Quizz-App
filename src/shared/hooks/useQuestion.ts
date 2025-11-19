@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
-import type { CreateQuestion } from "../../interfaces/quizzly.interface"
-import { startCreatingQuestionsForQuiz } from "../../store/questions/questions.thunk"
+import type { CreateQuestionWithAnswers } from "../../interfaces/quizzly.interface"
+import { startCreatingQuestionsForQuiz, startGettingQuestionsFromQuiz } from "../../store/questions/questions.thunk"
 import { setCreatingNewQuestion } from "../../store/questions/questions.slice"
 
 export const useQuestion = () => {
@@ -11,11 +11,11 @@ export const useQuestion = () => {
 
     const getQuestionsFromQuiz = ( quizId: string ) => {
         if ( !quizId ) throw new Error('El id del quiz es necesario para obteners las preguntas')
+        dispatch(startGettingQuestionsFromQuiz(quizId))
     }
 
-    const createQuestionInQuiz = ( quizId: string, createQuestion: CreateQuestion ) => {
-        if ( !quizId ) throw new Error('El id del quiz es necesario para crear una pregunta')
-        dispatch( startCreatingQuestionsForQuiz(quizId, createQuestion))
+    const createQuestionInQuiz = (createQuestion: CreateQuestionWithAnswers ) => {
+        dispatch( startCreatingQuestionsForQuiz(createQuestion))
     }
 
     const activateNewQuestionArea = ( isActive: boolean ) => {

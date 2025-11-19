@@ -38,7 +38,7 @@ export const Menu: React.FC = () => {
             rounded-lg p-8
             transition-colors duration-200
             ${isDarkTheme 
-                ? 'bg-[#2c3e50]' 
+                ? 'bg-gray-800' 
                 : 'bg-white'
             }
         `}>

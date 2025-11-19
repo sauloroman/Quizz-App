@@ -13,7 +13,7 @@ export const CreateQuizzPage: React.FC = () => {
     <MainLayout title='Crear Nuevo Quizz'>
       <div className='space-y-10 w-[80%] mx-auto'>
         
-        <section className={`${isDarkTheme ? 'bg-[#2c3e50]' : 'bg-gray-200'} p-8 rounded-md`}>
+        <section className={`${isDarkTheme ? 'bg-gray-800' : 'bg-gray-200'} p-8 rounded-md`}>
           <h3 className='text-gray-100 font-bold uppercase text-lg mb-4'>Información General</h3>
           {
             isLoading

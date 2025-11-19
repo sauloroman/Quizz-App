@@ -25,8 +25,8 @@ export const QuizItem: React.FC<Props> = ({
   const { activateQuiz } = useQuiz()
 
   const onSelectQuiz = () => {
-    goToPage(`quizz/${id}`)
     activateQuiz(id)
+    goToPage(`quizz/${id}`)
   }
 
   return (

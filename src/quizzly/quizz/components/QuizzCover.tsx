@@ -50,18 +50,6 @@ export const QuizzCover: React.FC<Props> = ({ quizId, quizImage, quizzColor, qui
                 </IconButton>
             </div>
 
-            <div className='absolute top-5 right-5'>
-                <IconButton>
-                    <i className='bxr bx-pencil text-2xl'></i> 
-                </IconButton>
-            </div>
-            
-            <div className='absolute top-5 right-20'>
-                <IconButton>
-                    <i className='bxr bx-trash text-2xl'></i> 
-                </IconButton>
-            </div>
-
             <div 
                 className="absolute bottom-0 left-0 right-0 h-1"
                 style={{ backgroundColor: quizzColor }}
