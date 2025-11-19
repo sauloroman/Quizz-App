@@ -4,21 +4,24 @@ import { QuizItem } from './QuizItem'
 
 interface Props {
     quizzes: Quiz[]
-    isDarkTheme: boolean
 }
 
-export const QuizzesList: React.FC<Props> = ({ quizzes, isDarkTheme }) => {
-  return (
-    <ul className='flex flex-col gap-4'>
-        {
-            quizzes.map( quiz => (
-                <QuizItem
-                    key={quiz.id}
-                    {...quiz}
-                    isDarkTheme={isDarkTheme}
-                />
-            ))
-        }
-    </ul>
-  )
+export const QuizzesList: React.FC<Props> = ({ quizzes }) => {
+    return (
+        <ul className='grid grid-cols-4 gap-3'>
+            {
+                quizzes.map( quiz => (
+                    <QuizItem
+                        key={quiz.id}
+                        id={quiz.id}
+                        title={quiz.title}
+                        description={quiz.description ?? ''}
+                        color={quiz.color ?? ''}
+                        subject={quiz.subject}
+                        createdAt={quiz.createdAt}
+                    />
+                ))
+            }
+        </ul>
+    )
 }

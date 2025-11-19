@@ -29,7 +29,7 @@ export const Quizzes: React.FC = () => {
       {quizes.length === 0 ? (
         <EmptyQuizzes isDarkTheme={isDarkTheme} />
       ) : (
-        <QuizzesList quizzes={quizes} isDarkTheme={isDarkTheme} />
+        <QuizzesList quizzes={quizes} />
       )}
 
       { modalIsOpen && name === ModalNames.confirmDeleteQuizz && <ModalConfirmDeleteQuiz />}

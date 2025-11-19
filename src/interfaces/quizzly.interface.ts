@@ -15,13 +15,15 @@ export interface Quiz {
   color?: string
   createdAt: Date
   updatedAt: Date
+  image: string
 }
 
 export interface CreateQuiz {
   title: string
   subject: string
   description?: string
-  color?: string
+  color?: string,
+  image?: string
 }
 
 export interface Question {

@@ -1,16 +1,13 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Button } from '../../../shared/components/Button'
+import { useNavigate } from '../../../shared/hooks'
 
 interface Props {
   isDarkTheme: boolean
 }
 
 export const EmptyQuizzes: React.FC<Props> = ({ isDarkTheme }) => {
-  const navigate = useNavigate()
-
-  const handleCreateQuiz = () => {
-    navigate('/create-quizz')
-  }
+  const { goToPage } = useNavigate()
 
   return (
     <div className={`flex flex-col items-center justify-center py-16 px-4 rounded-lg ${
@@ -42,17 +39,16 @@ export const EmptyQuizzes: React.FC<Props> = ({ isDarkTheme }) => {
         }`}>
           Comienza creando tu primer cuestionario para organizar tus preguntas y evaluaciones.
         </p>
-        
-        <button
-          onClick={handleCreateQuiz}
+
+        <Button 
+          text='Crear mi primer cuestionario'
+          onClick={() => goToPage('create-quizz')}
           className={`mt-6 px-6 py-3 rounded-lg font-medium transition-colors ${
             isDarkTheme
               ? 'bg-blue-600 hover:bg-blue-700 text-white'
               : 'bg-blue-500 hover:bg-blue-600 text-white'
           }`}
-        >
-          Crear mi primer cuestionario
-        </button>
+        />
       </div>
     </div>
   )
