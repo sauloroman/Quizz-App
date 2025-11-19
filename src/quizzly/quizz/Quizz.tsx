@@ -1,16 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { QuizzCover } from './components/QuizzCover'
 import { useAuth, useQuiz } from '../../shared/hooks'
 import { MainLayout } from '../../layout/MainLayout'
 import { QuizzInfo } from './components/QuizzInfo'
 import { QuizzListQuestions } from './components/QuizzListQuestions'
 import { QuizzHeaderQuestionsCounter } from './components/QuizzHeaderQuestionsCounter'
+import { useQuestion } from '../../shared/hooks/useQuestion'
+import { QuizzEmptyQuestions } from './components/QuizzEmptyQuestions'
 
 export const Quizz: React.FC = () => {
+
   const { quizSelected } = useQuiz()
+  const { questions, getQuestionsFromQuiz } = useQuestion()
   const { user } = useAuth()
   
   if (!quizSelected || !user ) return null
+
+  useEffect(() => {
+    if ( questions.length === 0 ) {
+      getQuestionsFromQuiz(quizSelected.id)
+    }
+  }, [quizSelected.id])
 
   return (
     <MainLayout title={quizSelected.title}>
@@ -22,7 +32,7 @@ export const Quizz: React.FC = () => {
           quizzColor={quizSelected.color ?? '#000000'}
         />
 
-        <main className='grid grid-cols-7 gap-3 my-5'>
+        <main className='grid grid-cols-7 gap-4 my-5'>
           <div className='col-span-2'>
             <QuizzInfo 
               user={ user }
@@ -34,8 +44,12 @@ export const Quizz: React.FC = () => {
             />
           </div>
           <div className="col-span-5">
-            <QuizzHeaderQuestionsCounter />
-            <QuizzListQuestions />
+            <QuizzHeaderQuestionsCounter quizColor={quizSelected.color ?? '#000000'} questionsCounter={questions.length}/>
+            {
+              questions.length === 0
+              ? (<QuizzEmptyQuestions />)
+              : (<QuizzListQuestions />)
+            }
           </div>
         </main>
       </div>

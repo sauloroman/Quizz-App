@@ -32,6 +32,7 @@ export const startGettingQuizzesFromUser = () => {
                     description: data.description,
                     subject: data.subject,
                     color: data.color,
+                    image: data.image,
                     createdAt: data.createdAt?.toDate() || new Date(),
                     updatedAt: data.createdAt?.toDate() || new Date(),
                 })
@@ -68,6 +69,7 @@ export const startCreatingQuiz = ( createQuizData: CreateQuiz, navigate: (path: 
             const newQuizz: Quiz = {
                 id: newDoc.id,
                 userId: id,
+                image: createQuizData.image ?? '',
                 title: createQuizData.title,
                 color: createQuizData.color,
                 subject: createQuizData.subject,

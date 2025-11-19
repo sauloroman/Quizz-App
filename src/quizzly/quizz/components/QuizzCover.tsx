@@ -15,7 +15,7 @@ export const QuizzCover: React.FC<Props> = ({ quizId, quizImage, quizzColor, qui
     const hasImage = quizImage && quizImage.trim() !== ''
 
     return (
-        <div className="relative w-full h-56 overflow-hidden rounded-b-lg">
+        <div className="relative w-full h-40 overflow-hidden rounded-b-lg">
             {hasImage ? (
                 <>
                     <div 
