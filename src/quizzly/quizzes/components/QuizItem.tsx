@@ -32,7 +32,6 @@ export const QuizItem: React.FC<Props> = ({
 
   return (
     <li
-      onClick={onSelectQuiz}
       className={`rounded-lg border transition-all hover:shadow-lg cursor-pointer overflow-hidden flex flex-col h-full ${
         isDarkTheme
           ? 'bg-gray-800 border-gray-700 hover:border-gray-600'
@@ -82,9 +81,6 @@ export const QuizItem: React.FC<Props> = ({
       <div className="flex justify-end p-4 pb-2">
           <IconButton onClick={onSelectQuiz}>
             <i className='bxr bx-eye'></i> 
-          </IconButton>
-          <IconButton onClick={onSelectQuiz}>
-            <i className='bxr bx-book'></i> 
           </IconButton>
       </div>
       

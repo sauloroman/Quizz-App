@@ -3,6 +3,7 @@ import { uiSlice } from "./ui/ui.slice";
 import { authSlice } from "./auth/auth.slice";
 import { quizzeSlice } from "./quizzes/quizzes.slice";
 import { questionsSlice } from "./questions/questions.slice";
+import { attemptSlice } from "./attempt/attempt.slice";
 
 export const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
         auth: authSlice.reducer,
         quizzes: quizzeSlice.reducer,
         questions: questionsSlice.reducer,
+        attempt: attemptSlice.reducer,
     }
 })
 

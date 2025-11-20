@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAuth, useNavigate, useTheme } from '../hooks'
 import logoDark from '../../assets/img/logo-dark-mode.png'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 interface Props {
     title: string
@@ -23,62 +23,88 @@ export const Header: React.FC<Props> = ({ title }) => {
 
     return (
         <header className={`
-                    flex justify-between items-center
-                    px-6 py-2 shadow-md
-                    transition-colors duration-200 
-                    ${isDarkTheme
-                ? 'bg-[#2c3e50]'
-                : 'bg-white'
+            sticky top-0 z-50
+            flex justify-between items-center
+            px-6 py-2 
+            transition-all duration-300
+            backdrop-blur-md
+            border-b
+            ${isDarkTheme
+                ? 'bg-gray-900/80 border-gray-800 shadow-2xl shadow-black/20'
+                : 'bg-white/80 border-gray-200 shadow-lg shadow-gray-200/20'
             } 
-                `}>
-            <div className='flex gap-3 items-center'>
+        `}>
+            <div className='flex gap-4 items-center'>
                 <img
-                    className='h-10'
+                    className='h-9 transition-transform hover:scale-105'
                     src={isDarkTheme ? logoDark : ''}
                     alt='Quizzly App'
                 />
+
+                <div className={`h-6 w-px ${isDarkTheme ? 'bg-gray-700' : 'bg-gray-300'}`}></div>
+
                 <div className='flex items-center gap-2'>
-                    <NavLink to={"/"} className={`flex items-center justify-center`}>
-                        <i className={`bx bxs-home ${isDarkTheme ? 'text-white' : 'text-gray-800'} text-xl`}></i>
+                    <NavLink
+                        to="/"
+                        className={`cursor-pointer p-2 rounded-lg transition-all duration-200 ${isDarkTheme
+                                ? 'text-gray-400 hover:text-white hover:bg-gray-800'
+                                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                            }`}
+                    >
+                        <i className='bx bxs-home text-lg'></i>
                     </NavLink>
-                    <button onClick={returnPage} className='flex items-center cursor-pointer justify-center'>
-                        <i className={`bx bx-chevron-left ${isDarkTheme ? 'text-white' : 'text-gray-800'} text-xl`}></i>
+
+                    <button
+                        onClick={returnPage}
+                        className={`cursor-pointer p-2 rounded-lg transition-all duration-200 flex items-center justify-center ${isDarkTheme
+                                ? 'text-gray-400 hover:text-white hover:bg-gray-800'
+                                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                            }`}
+                    >
+                        <i className='bx bx-chevron-left text-2xl'></i>
                     </button>
-                    <h2 className={`font-bold ${isDarkTheme ? 'text-gray-100' : 'text-gray-800'}`}>{title}</h2>
+
+                    <h2 className={`font-semibold text-base ml-2 ${isDarkTheme ? 'text-gray-200' : 'text-gray-900'
+                        }`}>
+                        {title}
+                    </h2>
                 </div>
             </div>
 
-            <div className='flex items-center gap-4'>
+            <div className='flex items-center gap-3'>
                 <button
                     onClick={toggleTheme}
                     className={`
-                                cursor-pointer
-                                p-2 rounded-lg
-                                transition-all duration-200
-                                flex items-center justify-center
-                                ${isDarkTheme
-                            ? 'bg-gray-600 hover:bg-gray-700 text-yellow-300'
-                            : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+                        cursor-pointer
+                        p-2.5 rounded-lg
+                        transition-all duration-200
+                        flex items-center justify-center
+                        backdrop-blur-sm
+                        ${isDarkTheme
+                            ? 'bg-linear-to-br from-gray-800 to-gray-800/50 hover:from-gray-700 hover:to-gray-700/50 text-amber-400 hover:text-amber-300 border border-gray-700 hover:border-gray-600'
+                            : 'bg-linear-to-br from-gray-100 to-gray-50 hover:from-gray-200 hover:to-gray-100 text-amber-500 hover:text-amber-600 border border-gray-200 hover:border-gray-300'
                         }
-                            `}
+                    `}
                     aria-label={isDarkTheme ? 'Activar modo claro' : 'Activar modo oscuro'}
                 >
-                    <i className={`bx bx-${isDarkTheme ? 'sun' : 'moon'} text-xl`}></i>
+                    <i className={`bx bx-${isDarkTheme ? 'sun' : 'moon'} text-lg`}></i>
                 </button>
 
                 <button
                     onClick={logoutUser}
                     className={`
-                        px-4 py-2 rounded-lg font-semibold
-                        border-2
+                        cursor-pointer
+                        px-4 py-2.5 rounded-lg font-semibold text-sm
                         transition-all duration-200
+                        flex items-center gap-2
+                        backdrop-blur-sm
                         ${isDarkTheme
-                            ? 'border-red-400 text-red-400 hover:bg-red-600 hover:text-white'
-                            : 'border-red-500 text-red-600 hover:bg-red-500 hover:text-white'
+                            ? 'bg-linear-to-r from-red-500/20 to-red-600/20 text-red-400 hover:from-red-500/30 hover:to-red-600/30 hover:text-red-300 border border-red-500/30 hover:border-red-500/50'
+                            : 'bg-linear-to-r from-red-50 to-red-100 text-red-700 hover:from-red-100 hover:to-red-200 hover:text-red-800 border border-red-200 hover:border-red-300'
                         }
                     `}
                 >
-                    Cerrar Sesión
+                    Salir
                 </button>
             </div>
         </header>

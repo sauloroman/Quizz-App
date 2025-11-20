@@ -27,7 +27,7 @@ export const Quizz: React.FC = () => {
 
   return (
     <MainLayout title={quizSelected.title}>
-      <div className='w-[90%] mx-auto -mt-10'>
+      <div className='w-[95%] mx-auto -mt-10'>
         <QuizzCover 
           quizImage={quizSelected.image}
           quizId={quizSelected.id}

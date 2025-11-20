@@ -1,5 +1,5 @@
 import React from 'react'
-import { useModal, useNavigate, useTheme } from '../../../shared/hooks'
+import { useAttempt, useModal, useNavigate, useTheme } from '../../../shared/hooks'
 import { SubmitButton } from '../../../shared/components/SubmitButton'
 import { ModalNames } from '../../../interfaces/ui.interface'
 
@@ -18,6 +18,7 @@ export const QuizzActions: React.FC<Props> = ({ quizId, quizColor }) => {
     const { isDarkTheme } = useTheme()
     const { goToPage } = useNavigate()
     const { onOpenModal } = useModal()
+    const { onSetQuizAttempt } = useAttempt()
 
     const actions: Action[] = [
         {
@@ -31,6 +32,11 @@ export const QuizzActions: React.FC<Props> = ({ quizId, quizColor }) => {
             onClick: () => onOpenModal(ModalNames.confirmDeleteQuizz)
         }
     ]
+
+    const onAttemptQuizz = () => {
+        goToPage(`attempt/${quizId}`)
+        onSetQuizAttempt(quizId)
+    }
 
     return (
         <div className={`mt-5 border transition-colors ${
@@ -65,7 +71,7 @@ export const QuizzActions: React.FC<Props> = ({ quizId, quizColor }) => {
                             <span className="text-sm font-medium">{action.label}</span>
                         </button>
                     ))}
-                    <SubmitButton text='Estudiar Quiz'/>
+                    <SubmitButton onClick={onAttemptQuizz} text='Estudiar Quiz'/>
                 </div>
             </div>
         </div>
