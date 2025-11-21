@@ -44,8 +44,7 @@ export interface Question {
 
 export interface CreateQuestion {
   questionText: string,
-  points: number,
-  order: number
+  points: number
 }
 
 export interface Answer {
@@ -64,6 +63,12 @@ export interface CreateQuestionWithAnswers {
   question: CreateQuestion,
   answers: CreateAnswer[]
   correctAnswer: string,
+}
+
+export interface EditQuestionWithAnswers {
+  question?: Question,
+  answers?: Answer[]
+  correctAnswer?: string,
 }
 
 export interface QuestionWithAnswers {

@@ -1,7 +1,8 @@
-import { useNavigate as useRouterNavigate } from "react-router-dom"
+import { useParams, useNavigate as useRouterNavigate } from "react-router-dom"
 
 export const useNavigate = () => {
 
+    const params = useParams()
     const navigate = useRouterNavigate()
 
     const returnPage = () => {
@@ -17,6 +18,8 @@ export const useNavigate = () => {
     }
 
     return {
+        params, 
+        
         goToPage,
         returnPage,
     }

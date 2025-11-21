@@ -50,6 +50,7 @@ export const QuestionListItem: React.FC<Props> = ({ question, index }) => {
                     </div>
 
                     <QuestionActions 
+                        questionId={question.question.id}
                         isDarkTheme={isDarkTheme}
                         isOpen={isOpen}
                         toggleAccordion={toggleAccordion}

@@ -25,7 +25,6 @@ export const QuizzCreateQuestionForm: React.FC = () => {
             correctAnswer: '',
             question: {
                 questionText: '',
-                order: 1,
                 points: 1
             },
             answers: [

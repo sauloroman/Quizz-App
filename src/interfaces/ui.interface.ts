@@ -29,6 +29,7 @@ export type ModalNames =
 'confirmFinishAttempt' |
 'attemptFinished' |
 'confirmInitAttempt' |
+'editQuestion' |
 'pending' 
 
 export const ModalNames = {
@@ -36,6 +37,7 @@ export const ModalNames = {
     confirmFinishAttempt: 'confirmFinishAttempt' as ModalNames,
     attemptFinished: 'attemptFinished' as ModalNames,
     confirmInitAttempt: 'confirmInitAttempt' as ModalNames,
+    editQuestion: 'editQuestion' as ModalNames,
     pending: 'pending' as ModalNames,
 }
 

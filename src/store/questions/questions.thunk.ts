@@ -1,6 +1,6 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type { Answer, CreateQuestionWithAnswers, Question, QuestionWithAnswers } from "../../interfaces/quizzly.interface";
-import { addQuestion, setCreatingNewQuestion, setIsLoading, setQuestions } from "./questions.slice";
+import type { Answer, CreateQuestionWithAnswers, EditQuestionWithAnswers, Question, QuestionWithAnswers } from "../../interfaces/quizzly.interface";
+import { addQuestion, setCreatingNewQuestion, setIsLoading, setQuestions, updateQuestion } from "./questions.slice";
 import { setAlert } from "../ui/ui.slice";
 import { formatErrorFromFirebase } from "../../shared/helpers/format-firebase-errors";
 import { AlertType } from "../../interfaces/ui.interface";
@@ -132,6 +132,84 @@ export const startCreatingQuestionsForQuiz = (dataQuestion: CreateQuestionWithAn
                 setAlert({
                     isOpen: true,
                     title: "Error - Crear Pregunta En Quiz",
+                    text: formatErrorFromFirebase(error),
+                    type: AlertType.error,
+                })
+            );
+        } finally {
+            dispatch(setIsLoading(false));
+        }
+    };
+};
+
+export const startUpdatingQuestionForQuiz = (dataQuestion: EditQuestionWithAnswers) => {
+    return async (dispatch: Dispatch, getState: () => RootState) => {
+        dispatch(setIsLoading(true));
+        try {
+            const { quizzes: { quizSelected } } = getState();
+            const { answers, question } = dataQuestion;
+
+            if ( !question ) throw new Error(`La pregunta es obligatoria`)
+            if ( !answers ) throw new Error(`Las respesutas de la pregunta song obligatorias`)
+
+            if (!quizSelected) return;
+            const quizId = quizSelected.id;
+
+            const questionRef = doc(FirebaseDB, `quizzes/${quizId}/questions/${question.id}`);
+            await setDoc(questionRef, { ...question, quizId }, { merge: true });
+
+            const updatedQuestion: Question = {
+                id: question.id,
+                points: question.points,
+                questionText: question.questionText,
+                quizId: quizId,
+                createdAt: new Date(),
+            };
+
+            const answersArr: Answer[] = [];
+
+            for (let index = 0; index < answers.length; index++) {
+                const answer = answers[index];
+                const answerRef = doc(
+                    FirebaseDB,
+                    `quizzes/${quizId}/questions/${question.id}/answers`,
+                    answer.id || doc(collection(FirebaseDB, `quizzes/${quizId}/questions/${question.id}/answers`)).id
+                );
+
+                const newAnswer: Answer = {
+                    id: answerRef.id,
+                    questionId: question.id,
+                    answerText: answer.answerText,
+                    isCorrect: answer.isCorrect,
+                };
+
+                await setDoc(answerRef, newAnswer, { merge: true });
+                answersArr.push(newAnswer);
+            }
+
+            dispatch(
+                updateQuestion({
+                    question: updatedQuestion,
+                    answers: answersArr,
+                })
+            );
+
+            dispatch(
+                setAlert({
+                    isOpen: true,
+                    title: "Preguntas",
+                    text: "Pregunta actualizada correctamente",
+                    type: AlertType.success,
+                })
+            );
+
+            dispatch(setCreatingNewQuestion(false))
+        } catch (error) {
+            console.error(error);
+            dispatch(
+                setAlert({
+                    isOpen: true,
+                    title: "Error - Actualizar Pregunta En Quiz",
                     text: formatErrorFromFirebase(error),
                     type: AlertType.error,
                 })

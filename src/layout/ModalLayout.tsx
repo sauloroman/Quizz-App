@@ -4,32 +4,40 @@ import { useTheme } from '../shared/hooks'
 interface Props {
     children: React.ReactNode
     title: string
+    isOpen: boolean,
     onClose?: () => void
-    isOpen: boolean
+    className?: string,
 }
 
-export const ModalLayout: React.FC<Props> = ({ title, children, onClose, isOpen }) => {
+export const ModalLayout: React.FC<Props> = ({ 
+    title, 
+    children, 
+    onClose, 
+    isOpen, 
+    className = '' 
+}) => {
+    
     const { isDarkTheme } = useTheme()
-
     if (!isOpen) return null
 
     return (
         <>
             <div 
-                className={`fixed inset-0 ${isDarkTheme ? 'bg-gray-50/40' : 'bg-black/80'} bg-opacity-50 z-40 transition-opacity duration-200`}
+                className={`z-50 fixed inset-0 ${isDarkTheme ? 'bg-gray-50/40' : 'bg-black/80'} bg-opacity-50 z-40 transition-opacity duration-200`}
                 onClick={onClose}
             />
 
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                 <div 
                     className={`
-                        relative w-full max-w-md
+                        relative
                         rounded-lg shadow-xl
                         transition-colors duration-200
                         ${isDarkTheme 
                             ? 'bg-[#3d4f5c]' 
                             : 'bg-white'
                         }
+                        ${className}
                     `}
                     onClick={(e) => e.stopPropagation()}
                 >

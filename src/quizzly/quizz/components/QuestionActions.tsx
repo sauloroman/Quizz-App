@@ -1,16 +1,29 @@
 import React from 'react'
 import { IconButton } from '../../../shared/components/IconButton'
+import { useModal } from '../../../shared/hooks'
+import { ModalNames } from '../../../interfaces/ui.interface'
+import { useQuestion } from '../../../shared/hooks/useQuestion'
 
 interface Props {
+    questionId: string,
     isDarkTheme: boolean,
     isOpen: boolean,
     toggleAccordion: () => void
 }
 
-export const QuestionActions: React.FC<Props> = ({ isOpen, toggleAccordion, isDarkTheme }) => {
+export const QuestionActions: React.FC<Props> = ({ questionId, isOpen, toggleAccordion, isDarkTheme }) => {
+
+    const { onSetQuestionSelected } = useQuestion()
+    const { onOpenModal } = useModal()
+
+    const onEditQuestion = () => {
+        onSetQuestionSelected(questionId)
+        onOpenModal(ModalNames.editQuestion)
+    }
+
     return (
         <div className="flex gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
-            <IconButton>
+            <IconButton onClick={onEditQuestion}>
                 <i className={`bx bx-edit ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}></i>
             </IconButton>
             <IconButton>
