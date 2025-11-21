@@ -1,17 +1,14 @@
 import React from 'react'
-import { useModal, useNavigate, useQuiz, useTheme } from '../../shared/hooks'
+import { useNavigate, useQuiz, useTheme } from '../../shared/hooks'
 import { MainLayout } from '../../layout/MainLayout'
 import { QuizzesList } from './components/QuizzesList'
 import { EmptyQuizzes } from './components/EmptyQuizzes'
-import { ModalNames } from '../../interfaces/ui.interface'
-import { ModalConfirmDeleteQuiz } from './components/ModalConfirmDeleteQuizz'
 import { SubmitButton } from '../../shared/components/SubmitButton'
 
 export const Quizzes: React.FC = () => {
   const { quizes } = useQuiz()
   const { isDarkTheme } = useTheme()
   const { goToPage } = useNavigate()
-  const { modal: { isOpen: modalIsOpen, name }} = useModal()
 
   return (
     <MainLayout title='Tus Creaciones'>
@@ -43,7 +40,6 @@ export const Quizzes: React.FC = () => {
         <QuizzesList quizzes={quizes} />
       )}
 
-      { modalIsOpen && name === ModalNames.confirmDeleteQuizz && <ModalConfirmDeleteQuiz />}
     </MainLayout>
   )
 }

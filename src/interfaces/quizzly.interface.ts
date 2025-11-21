@@ -77,9 +77,15 @@ export interface QuizAttempt {
   userId: string
   score: number
   totalPoints: number
-  percentage: number
   completedAt: Date
-  timeSpent?: number
+}
+
+export interface CreateQuizAttempt {
+  quizId: string,
+  userId: string,
+  score: number,
+  totalPoints: number,
+  completedAt: Date,
 }
 
 export interface UserAnswer {
@@ -89,6 +95,18 @@ export interface UserAnswer {
   answerId: string  
   isCorrect: boolean
   pointsEarned: number
+}
+
+export interface CreateUserAnswer {
+  questionId: string
+  answerId: string  
+  isCorrect: boolean
+  pointsEarned: number
+}
+
+export interface AttemptWithAnswers {
+  result: CreateQuizAttempt | null,
+  userAnswers: CreateUserAnswer[]
 }
 
 export interface StudySession {

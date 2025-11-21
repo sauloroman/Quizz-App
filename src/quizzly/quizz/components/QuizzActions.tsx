@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAttempt, useModal, useNavigate, useTheme } from '../../../shared/hooks'
+import { useModal, useNavigate, useTheme } from '../../../shared/hooks'
 import { SubmitButton } from '../../../shared/components/SubmitButton'
 import { ModalNames } from '../../../interfaces/ui.interface'
 
@@ -18,7 +18,6 @@ export const QuizzActions: React.FC<Props> = ({ quizId, quizColor }) => {
     const { isDarkTheme } = useTheme()
     const { goToPage } = useNavigate()
     const { onOpenModal } = useModal()
-    const { onSetQuizAttempt } = useAttempt()
 
     const actions: Action[] = [
         {
@@ -33,11 +32,6 @@ export const QuizzActions: React.FC<Props> = ({ quizId, quizColor }) => {
         }
     ]
 
-    const onAttemptQuizz = () => {
-        goToPage(`attempt/${quizId}`)
-        onSetQuizAttempt(quizId)
-    }
-
     return (
         <div className={`mt-5 border transition-colors ${
             isDarkTheme
@@ -50,11 +44,7 @@ export const QuizzActions: React.FC<Props> = ({ quizId, quizColor }) => {
             />
 
             <div className="p-4 space-y-4">
-                <p className={`text-xs font-semibold ${
-                    isDarkTheme ? 'text-gray-400' : 'text-gray-600'
-                }`}>
-                    ACCIONES
-                </p>
+                <p className={`text-xs font-semibold ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>ACCIONES</p>
 
                 <div className="space-y-2">
                     {actions.map((action, index) => (
@@ -71,7 +61,7 @@ export const QuizzActions: React.FC<Props> = ({ quizId, quizColor }) => {
                             <span className="text-sm font-medium">{action.label}</span>
                         </button>
                     ))}
-                    <SubmitButton onClick={onAttemptQuizz} text='Estudiar Quiz'/>
+                    <SubmitButton onClick={() => onOpenModal(ModalNames.confirmInitAttempt)} text='Estudiar Quiz'/>
                 </div>
             </div>
         </div>

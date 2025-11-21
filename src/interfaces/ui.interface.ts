@@ -24,11 +24,21 @@ export interface MenuOption {
     link: string,
 }
 
-export type ModalNames = 'confirmDeleteQuizz' | 'pending'
+export type ModalNames = 
+'confirmDeleteQuizz' | 
+'confirmFinishAttempt' |
+'attemptFinished' |
+'confirmInitAttempt' |
+'pending' 
+
 export const ModalNames = {
     confirmDeleteQuizz: 'confirmDeleteQuizz' as ModalNames,
-    pending: 'pending' as ModalNames
+    confirmFinishAttempt: 'confirmFinishAttempt' as ModalNames,
+    attemptFinished: 'attemptFinished' as ModalNames,
+    confirmInitAttempt: 'confirmInitAttempt' as ModalNames,
+    pending: 'pending' as ModalNames,
 }
+
 export interface Modal {
     isOpen: boolean,
     name: ModalNames,

@@ -1,18 +1,17 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useAttempt, useTheme } from '../../../shared/hooks'
+import { SubmitButton } from '../../../shared/components/SubmitButton'
 
 export const AttemptResult: React.FC = () => {
     const { isDarkTheme } = useTheme()
-    const { isCorrectAnswer, isResultVisible, onNextQuestion, currentQuestion } = useAttempt()
-
-    useEffect(() => {
-        if (isResultVisible) {
-            const timer = setTimeout(() => {
-                onNextQuestion()
-            }, 3000)
-            return () => clearTimeout(timer)
-        }
-    }, [isResultVisible])
+    const { 
+        isCorrectAnswer, 
+        currentQuestion, 
+        onNextQuestion, 
+        currentQuestionNumber, 
+        questionsAttempt, 
+        onFinishQuizz 
+    } = useAttempt()
 
     return (
         <div className={`
@@ -35,7 +34,6 @@ export const AttemptResult: React.FC = () => {
 
             <div className="flex flex-col items-center justify-center p-10 space-y-6 text-center">
 
-                {/* Ícono con animación suave */}
                 <div className={`
                     flex items-center justify-center w-20 h-20 rounded-full shadow-md
                     transition-all duration-300
@@ -51,7 +49,6 @@ export const AttemptResult: React.FC = () => {
                     `}></i>
                 </div>
 
-                {/* Texto de estado */}
                 <div className="space-y-1">
                     <h3 className={`text-3xl font-extrabold tracking-wide 
                         ${isCorrectAnswer
@@ -82,6 +79,14 @@ export const AttemptResult: React.FC = () => {
                             : 'No has obtenido puntos'
                         }
                     </p>
+                </div>
+                
+                <div className='w-fit flex justify-end'>
+                    <SubmitButton
+                        onClick={currentQuestionNumber === questionsAttempt.length ? onFinishQuizz : onNextQuestion} 
+                        text={`${currentQuestionNumber === questionsAttempt.length ? 'Finalizar Quizz' : 'Siguiente pregunta'}`} 
+                        className='text-md' 
+                    />
                 </div>
 
             </div>

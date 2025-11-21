@@ -1,10 +1,13 @@
 import React from 'react'
-import { useAttempt, useTheme } from '../../../shared/hooks'
+import { useAttempt, useModal, useTheme } from '../../../shared/hooks'
 import { AttemptStats } from './AttemptStats'
+import { SubmitButton } from '../../../shared/components/SubmitButton'
+import { ModalNames } from '../../../interfaces/ui.interface'
 
 export const AttemptQuizInfo: React.FC = () => {
     const { isDarkTheme } = useTheme()
     const { quizAttempt } = useAttempt()
+    const { onOpenModal } = useModal()
 
     if (!quizAttempt) return null
 
@@ -19,7 +22,10 @@ export const AttemptQuizInfo: React.FC = () => {
         `}>
             <div className="h-1.5 w-full transition-all" style={{ backgroundColor: quizAttempt.color }}/>
             <div className='p-6 space-y-4'>
-                <h1 className={`text-xl font-bold leading-tight ${isDarkTheme ? 'text-gray-100' : 'text-gray-900'}`}>{quizAttempt.title}</h1>
+                <header className='flex justify-between items-center'>
+                    <h1 className={`text-xl font-bold leading-tight ${isDarkTheme ? 'text-gray-100' : 'text-gray-900'}`}>{quizAttempt.title}</h1>
+                    <div className="w-fit"><SubmitButton className='text-sm' onClick={() => onOpenModal(ModalNames.confirmFinishAttempt)} text='Finalizar Intento' /></div>
+                </header>
                 <div className={`
                     flex items-center gap-4 py-2 px-6 rounded-lg
                     ${isDarkTheme 

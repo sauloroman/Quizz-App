@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { QuestionWithAnswers, Quiz } from "../../interfaces/quizzly.interface";
+import type { AttemptWithAnswers, CreateQuizAttempt, CreateUserAnswer, QuestionWithAnswers, Quiz } from "../../interfaces/quizzly.interface";
 
 interface AttemptState {
     quizAttempt: Quiz | null,
@@ -9,6 +9,9 @@ interface AttemptState {
     counterAccumulated: number,
     isCorrectAnswer: boolean,
     isResultVisible: boolean,
+    isAttemptFinished: boolean,
+    isLoading: boolean,
+    quizzAttemptResult: AttemptWithAnswers
 }
 
 const initialState: AttemptState = {
@@ -19,12 +22,31 @@ const initialState: AttemptState = {
     currentQuestionNumber: 0,
     isCorrectAnswer: false,
     isResultVisible: false,
+    isAttemptFinished: false,
+    isLoading: false,
+
+    quizzAttemptResult: {
+        result: null,
+        userAnswers: []
+    }
 }
 
 export const attemptSlice = createSlice({
     name: 'attempt',
     initialState: initialState,
     reducers: {
+
+        addUserAnswer: ( state, { payload }: PayloadAction<CreateUserAnswer>) => {
+            state.quizzAttemptResult.userAnswers.push( payload )
+        },
+
+        setUserAnswer: ( state, {payload}: PayloadAction<CreateUserAnswer[]>) => {
+            state.quizzAttemptResult.userAnswers = payload
+        },
+
+        setQuizzAttemptResult: ( state, {payload}: PayloadAction<CreateQuizAttempt | null>) => {
+            state.quizzAttemptResult.result = payload
+        },
 
         setQuizAttempt: ( state, {payload}: PayloadAction<Quiz | null>) => {
             state.quizAttempt = payload
@@ -50,6 +72,14 @@ export const attemptSlice = createSlice({
             state.currentQuestionNumber = payload
         },
 
+        setIsAttemptFinished: ( state, {payload}: PayloadAction<boolean>) => {
+            state.isAttemptFinished = payload
+        },
+
+        setIsLoading: ( state, {payload}: PayloadAction<boolean> ) => {
+            state.isLoading = payload
+        },
+
         incrementCounterAccumulated: ( state, {payload}: PayloadAction<number> ) => {
             state.counterAccumulated += payload
         },
@@ -62,12 +92,17 @@ export const attemptSlice = createSlice({
 })
 
 export const {
+    addUserAnswer,
+    setQuizzAttemptResult,
     setQuizAttempt,
     setQuestionsAttempt,
     setCurrentQuestion,
     setCurrentQuestionNumber,
+    setIsLoading,
     incrementCounterAccumulated,
     resetCounterAccumulated,
     setIsCorrectAnswer,
     setIsResultVisible,
+    setIsAttemptFinished,
+    setUserAnswer,
 } = attemptSlice.actions

@@ -11,6 +11,7 @@ import { QuizzActions } from './components/QuizzActions'
 import { Spinner } from '../../shared/components/Spinner'
 import { ModalNames } from '../../interfaces/ui.interface'
 import { QuizConfirmDelete } from './components/QuizConfirmDelete'
+import { QuizModalInitAttempt } from './components/QuizModalInitAttempt'
 
 export const Quizz: React.FC = () => {
 
@@ -65,6 +66,7 @@ export const Quizz: React.FC = () => {
         </main>
       </div>
       { modalIsOpen && modalName === ModalNames.confirmDeleteQuizz && <QuizConfirmDelete />}
+      { modalIsOpen && modalName === ModalNames.confirmInitAttempt && <QuizModalInitAttempt />}
     </MainLayout>
   )
 }
