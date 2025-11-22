@@ -1,6 +1,7 @@
 import type { UserAnswer } from '../../../interfaces/quizzly.interface'
 import { SubmitButton } from '../../../shared/components/SubmitButton'
-import { useNavigate } from '../../../shared/hooks'
+import { useAttempt, useAttempts, useNavigate } from '../../../shared/hooks'
+import { useQuestion } from '../../../shared/hooks/useQuestion'
 import { AttemptAnswerDetail } from './AttemptAnswerDetail'
 
 interface ExpandedContentProps {
@@ -15,9 +16,13 @@ export const AttemptExpandedContent: React.FC<ExpandedContentProps> = ({
   isDarkTheme,
 }) => {
 
+  const { getQuestionsFromQuiz } = useQuestion()
   const { goToPage } = useNavigate()
+  const { getAttemptById } = useAttempts()
 
   const onSeeDetails = () => {
+    const attempt = getAttemptById(attemptId)
+    getQuestionsFromQuiz(attempt.result.quizId)
     goToPage(`attempt/summary/${attemptId}`)
   }
 

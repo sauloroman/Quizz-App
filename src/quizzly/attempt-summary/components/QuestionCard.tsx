@@ -11,6 +11,8 @@ interface Props {
 
 export const QuestionCard: React.FC<Props> = ({ item, index, isDarkTheme }) => {
   const { question, userAnswer, selectedAnswer } = item
+  if ( !userAnswer ) return
+
   const status = getAnswerStatus(userAnswer.isCorrect)
 
   return (

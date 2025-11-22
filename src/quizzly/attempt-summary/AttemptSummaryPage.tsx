@@ -20,10 +20,7 @@ export const AttemptSummaryPage: React.FC = () => {
     const { questions } = useQuestion()
 
     useEffect(() => {
-        const quizId = attempt.result.quizId
-        const quizQuestions = questions.filter(question => question.question.quizId === quizId)
-
-        const mapped: QuestionWithUserAnswer[] = quizQuestions.map(question => {
+        const mapped: QuestionWithUserAnswer[] = questions.map(question => {
             const userAnswer = attempt.userAnswers.find(answer => answer.questionId === question.question.id)
 
             const selectedAnswer = userAnswer
