@@ -38,6 +38,7 @@ export const ModalNames = {
     attemptFinished: 'attemptFinished' as ModalNames,
     confirmInitAttempt: 'confirmInitAttempt' as ModalNames,
     editQuestion: 'editQuestion' as ModalNames,
+    deleteQuestion: 'deleteQuestion' as ModalNames, 
     pending: 'pending' as ModalNames,
 }
 

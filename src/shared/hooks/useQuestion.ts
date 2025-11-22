@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
 import type { Answer, CreateQuestionWithAnswers, EditQuestionWithAnswers } from "../../interfaces/quizzly.interface"
-import { startCreatingQuestionsForQuiz, startGettingQuestionsFromQuiz, startUpdatingQuestionForQuiz } from "../../store/questions/questions.thunk"
+import { startCreatingQuestionsForQuiz, startDeletingQuestionForQuiz, startGettingQuestionsFromQuiz, startUpdatingQuestionForQuiz } from "../../store/questions/questions.thunk"
 import { setCreatingNewQuestion, setQuestionSelected } from "../../store/questions/questions.slice"
 
 export const useQuestion = () => {
@@ -25,6 +25,10 @@ export const useQuestion = () => {
 
     const updateQuestionInQuiz = (editQuestion: EditQuestionWithAnswers) => {
         dispatch( startUpdatingQuestionForQuiz(editQuestion) )
+    }
+
+    const deleteQuestionInQuiz = ( quizId: string, questionId: string ) => {
+        dispatch( startDeletingQuestionForQuiz(quizId, questionId) )
     }
 
     const activateNewQuestionArea = ( isActive: boolean ) => {
@@ -52,6 +56,7 @@ export const useQuestion = () => {
         getQuestionsFromQuiz,
         updateQuestionInQuiz,
         createQuestionInQuiz,
+        deleteQuestionInQuiz,
         activateNewQuestionArea,
         onSetQuestionSelected,
         onGetCorrectAnswerFromQuestionSelected,

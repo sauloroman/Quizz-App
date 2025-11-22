@@ -1,11 +1,11 @@
 import type { Dispatch } from "@reduxjs/toolkit";
 import type { Answer, CreateQuestionWithAnswers, EditQuestionWithAnswers, Question, QuestionWithAnswers } from "../../interfaces/quizzly.interface";
-import { addQuestion, setCreatingNewQuestion, setIsLoading, setQuestions, updateQuestion } from "./questions.slice";
+import { addQuestion, deleteQuestion, setCreatingNewQuestion, setIsLoading, setQuestions, updateQuestion } from "./questions.slice";
 import { setAlert } from "../ui/ui.slice";
 import { formatErrorFromFirebase } from "../../shared/helpers/format-firebase-errors";
 import { AlertType } from "../../interfaces/ui.interface";
 import { FirebaseDB } from "../../config/firebase/config";
-import { collection, doc, getDocs, setDoc } from "firebase/firestore/lite";
+import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore/lite";
 import type { RootState } from "../store";
 
 export const startGettingQuestionsFromQuiz = (quizId: string) => {
@@ -219,3 +219,37 @@ export const startUpdatingQuestionForQuiz = (dataQuestion: EditQuestionWithAnswe
         }
     };
 };
+
+
+export const startDeletingQuestionForQuiz = ( quizId: string, questionId: string ) => {
+    return async ( dispatch: Dispatch ) => {
+        dispatch(setIsLoading(false));
+        try {
+            if ( !questionId ) throw new Error('El ID de la pregunta es necesaria para eliminar')
+
+            const questionRef = doc(FirebaseDB, `quizzes/${quizId}/questions`, questionId)
+            await deleteDoc(questionRef)
+
+            dispatch(deleteQuestion(questionId))
+
+            dispatch(setAlert({
+                isOpen: true,
+                title: 'Éxito',
+                text: 'Pregunta eliminada correctamente',
+                type: AlertType.success,
+            }))
+        } catch(error) {
+            console.error(error);
+            dispatch(
+                setAlert({
+                    isOpen: true,
+                    title: "Error - Eliminar Pregunta En Quiz",
+                    text: formatErrorFromFirebase(error),
+                    type: AlertType.error,
+                })
+            );
+        } finally {
+            dispatch(setIsLoading(false));
+        }
+    }
+}

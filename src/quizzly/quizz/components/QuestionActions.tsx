@@ -21,12 +21,17 @@ export const QuestionActions: React.FC<Props> = ({ questionId, isOpen, toggleAcc
         onOpenModal(ModalNames.editQuestion)
     }
 
+    const onDeleteQuestion = () => {
+        onSetQuestionSelected(questionId)
+        onOpenModal(ModalNames.deleteQuestion)
+    }
+
     return (
         <div className="flex gap-2 shrink-0" onClick={(e) => e.stopPropagation()}>
             <IconButton onClick={onEditQuestion}>
                 <i className={`bx bx-edit ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}></i>
             </IconButton>
-            <IconButton>
+            <IconButton onClick={onDeleteQuestion}>
                 <i className={`bx bx-trash ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}`}></i>
             </IconButton>
             <IconButton onClick={toggleAccordion}>

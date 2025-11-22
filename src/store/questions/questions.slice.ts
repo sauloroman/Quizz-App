@@ -45,6 +45,10 @@ export const questionsSlice = createSlice({
             })
         },
 
+        deleteQuestion: ( state, {payload}: PayloadAction<string>) => {
+            state.questions = state.questions.filter( question => question.question.id !== payload)
+        },
+
         setCreatingNewQuestion: ( state, {payload}: PayloadAction<boolean>) => {
             state.creatingNewQuestion = payload
         }
@@ -59,4 +63,5 @@ export const {
     setQuestionSelected,
     addQuestion,
     updateQuestion,
+    deleteQuestion,
 } = questionsSlice.actions

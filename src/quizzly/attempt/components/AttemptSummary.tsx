@@ -10,7 +10,7 @@ import { AttemptSummaryCorrectAnswers } from './AttemptSummaryCorrectAnswers'
 
 export const AttemptSummary: React.FC = () => {
     const { isDarkTheme } = useTheme()
-    const { userAnswers, result, questionsAttempt, onSaveQuizAttempt, quizAttempt } = useAttempt()
+    const { userAnswers, result, questionsAttempt, onSaveQuizAttempt } = useAttempt()
     const [ showCorrectAnswers, setShowCorrectAnswers] = useState(false)
     const { goToPage } = useNavigate()
     
@@ -34,7 +34,7 @@ export const AttemptSummary: React.FC = () => {
 
     const onSaveAttempt = () => {
         onSaveQuizAttempt()
-        goToPage(`quizz/${quizAttempt}`)
+        goToPage('quizzes')
     }
 
     return (
