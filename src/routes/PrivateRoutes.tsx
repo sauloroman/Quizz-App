@@ -9,6 +9,7 @@ import { AttemptsPage } from '../quizzly/attempts/AttemptsPage'
 import { useQuiz } from '../shared/hooks'
 import { EditQuizzPage } from '../quizzly/edit-quizz/EditQuizzPage'
 import { Attempt } from '../quizzly/attempt/Attempt'
+import { AttemptSummaryPage } from '../quizzly/attempt-summary/AttemptSummaryPage'
 
 export const PrivateRoutes: React.FC = () => {
   const { getQuizzes, quizes } = useQuiz()
@@ -28,6 +29,7 @@ export const PrivateRoutes: React.FC = () => {
       <Route path='/attempts' element={<AttemptsPage />} />
       <Route path='quizz/:id' element={<Quizz />} />
       <Route path='attempt/:id' element={<Attempt />} />
+      <Route path='attempt/summary/:id' element={<AttemptSummaryPage />} />
       <Route path='study/:id' element={<Study />} />
       <Route path='/*' element={<Navigate to={'/'} />} />
     </Routes>

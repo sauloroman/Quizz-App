@@ -46,3 +46,9 @@ export interface Modal {
     isOpen: boolean,
     name: ModalNames,
 }
+
+export interface AnswerStatus {
+  icon: string
+  color: string
+  bg: string
+}

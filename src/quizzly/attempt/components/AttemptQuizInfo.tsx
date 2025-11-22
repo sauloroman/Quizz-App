@@ -6,10 +6,16 @@ import { ModalNames } from '../../../interfaces/ui.interface'
 
 export const AttemptQuizInfo: React.FC = () => {
     const { isDarkTheme } = useTheme()
-    const { quizAttempt } = useAttempt()
+    const { quizAttempt, onSaveQuizAttempt, onFinishQuizz } = useAttempt()
     const { onOpenModal } = useModal()
 
     if (!quizAttempt) return null
+
+    const onFinishAttempt = () => {
+        onOpenModal(ModalNames.confirmFinishAttempt)
+        onSaveQuizAttempt()
+        onFinishQuizz()
+    }
 
     return (
         <div className={`
@@ -24,7 +30,7 @@ export const AttemptQuizInfo: React.FC = () => {
             <div className='p-6 space-y-4'>
                 <header className='flex justify-between items-center'>
                     <h1 className={`text-xl font-bold leading-tight ${isDarkTheme ? 'text-gray-100' : 'text-gray-900'}`}>{quizAttempt.title}</h1>
-                    <div className="w-fit"><SubmitButton className='text-sm' onClick={() => onOpenModal(ModalNames.confirmFinishAttempt)} text='Finalizar Intento' /></div>
+                    <div className="w-fit"><SubmitButton className='text-sm' onClick={onFinishAttempt} text='Finalizar Intento' /></div>
                 </header>
                 <div className={`
                     flex items-center gap-4 py-2 px-6 rounded-lg

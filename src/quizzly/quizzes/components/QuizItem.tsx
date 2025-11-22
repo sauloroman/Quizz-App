@@ -39,7 +39,7 @@ export const QuizItem: React.FC<Props> = ({
       }`}
     >
       <div
-        className="h-1 w-full"
+        className="h-2 w-full"
         style={{ backgroundColor: color || '#6B7280' }}
       />
       

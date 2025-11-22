@@ -114,6 +114,11 @@ export interface AttemptWithAnswers {
   userAnswers: CreateUserAnswer[]
 }
 
+export interface AttemptDBWithAnswers {
+  result: QuizAttempt,
+  userAnswers: UserAnswer[]
+}
+
 export interface StudySession {
   id: string
   userId: string
@@ -121,4 +126,10 @@ export interface StudySession {
   startedAt: Date
   endedAt?: Date
   questionsReviewed: number
+}
+
+export interface QuestionWithUserAnswer {
+  question: QuestionWithAnswers
+  userAnswer: UserAnswer
+  selectedAnswer: Answer | undefined
 }

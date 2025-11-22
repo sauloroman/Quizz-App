@@ -1,5 +1,5 @@
 import type { Dispatch } from "@reduxjs/toolkit";
-import type { CreateQuizAttempt, CreateUserAnswer, QuizAttempt, UserAnswer } from "../../interfaces/quizzly.interface";
+import type { CreateQuizAttempt, CreateUserAnswer, UserAnswer } from "../../interfaces/quizzly.interface";
 import type { RootState } from "../store";
 import { setIsAttemptFinished, setIsLoading } from "./attempt.slice";
 import { setAlert } from "../ui/ui.slice";
@@ -19,15 +19,6 @@ export const startCreatingAttempt = ( attemptData: Omit<CreateQuizAttempt, 'user
             const attemptRef = doc(collection(FirebaseDB, 'attempts'))
             await setDoc( attemptRef, { ...attemptData, userId } )
 
-            const attempt: QuizAttempt = {
-                id: attemptRef.id,
-                quizId: attemptData.quizId,
-                userId: userId,
-                score: attemptData.score,
-                totalPoints: attemptData.totalPoints,
-                completedAt: new Date()
-            }
-
             const userAnswersArr: UserAnswer[] = []
 
             userAnswers.forEach( async (userAns) => {
@@ -46,7 +37,6 @@ export const startCreatingAttempt = ( attemptData: Omit<CreateQuizAttempt, 'user
                 userAnswersArr.push( userAnswer )
             })
 
-            console.log({ attempt, userAnswersArr })
             dispatch(setIsAttemptFinished(true))
 
         } catch( error ){

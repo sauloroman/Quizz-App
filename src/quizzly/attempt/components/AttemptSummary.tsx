@@ -34,7 +34,7 @@ export const AttemptSummary: React.FC = () => {
 
     const onSaveAttempt = () => {
         onSaveQuizAttempt()
-        goToPage('quizzes')
+        goToPage('attempts')
     }
 
     return (
