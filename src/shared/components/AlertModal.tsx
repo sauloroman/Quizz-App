@@ -41,7 +41,7 @@ export const AlertModal: React.FC = () => {
   const { isDarkTheme } = useTheme()
 
   return (
-    <ModalLayout isOpen={isOpen} title={title} onClose={closeAlert}>
+    <ModalLayout className='w-md' isOpen={isOpen} title={title} onClose={closeAlert}>
       <div className="text-center">
         {getIcon(type)}
 

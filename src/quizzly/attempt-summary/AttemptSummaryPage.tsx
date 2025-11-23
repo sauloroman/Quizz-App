@@ -33,9 +33,9 @@ export const AttemptSummaryPage: React.FC = () => {
                 selectedAnswer,
             }
         })
-
+        console.log(mapped)
         setQuestionsWithAnswers(mapped)
-    }, [attemptId])
+    }, [attemptId, questions])
 
     return (
         <MainLayout title='Resumen de intento'>
@@ -47,7 +47,12 @@ export const AttemptSummaryPage: React.FC = () => {
 
             <div className="space-y-4">
                 {questionsWithAnswers.map((item, index) => (
-                    <QuestionCard key={item.question.question.id} item={item} index={index} isDarkTheme={isDarkTheme} />
+                    <QuestionCard 
+                        key={item.question.question.id} 
+                        item={item} 
+                        index={index} 
+                        isDarkTheme={isDarkTheme} 
+                    />
                 ))}
             </div>
         </MainLayout>

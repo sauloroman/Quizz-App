@@ -11,6 +11,8 @@ import type { RootState } from "../store";
 export const startGettingQuestionsFromQuiz = (quizId: string) => {
     return async (dispatch: Dispatch) => {
         dispatch(setIsLoading(true));
+        dispatch(setQuestions([]));
+             
         try {
             const questionsRef = collection(FirebaseDB, `quizzes/${quizId}/questions`);
             const questionsSnapshot = await getDocs(questionsRef);

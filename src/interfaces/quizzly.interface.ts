@@ -133,3 +133,39 @@ export interface QuestionWithUserAnswer {
   userAnswer: UserAnswer
   selectedAnswer: Answer | undefined
 }
+
+export interface QuizStats {
+    quizId: string
+    totalAttempts: number
+    averageScore: number
+    bestScore: number
+    worstScore: number
+    totalCorrectAnswers: number
+    totalIncorrectAnswers: number
+    correctAnswerPercentage: number
+}
+
+export interface OverallStats {
+    totalQuizzesTaken: number
+    totalQuizzesAvailable: number
+    totalQuestionsAnswered: number
+    totalCorrectAnswers: number
+    totalIncorrectAnswers: number
+    overallCorrectPercentage: number
+    overallAverageScore: number
+    bestQuizScore: number
+    worstQuizScore: number
+    totalPointsEarned: number
+    totalPointsAvailable: number
+    timeSpentOnQuizzes?: number 
+}
+
+export interface UserProgressData {
+    attemptsByDate: {
+      date: string
+      attempts: number
+      averageScore: number
+    }[]
+    longestStreak: number
+    currentStreak: number
+}

@@ -5,6 +5,7 @@ import { quizzeSlice } from "./quizzes/quizzes.slice";
 import { questionsSlice } from "./questions/questions.slice";
 import { attemptSlice } from "./attempt/attempt.slice";
 import { attemptsSlice } from "./attempts/attempts.slice";
+import { statsSlice } from "./stats/stats.slice";
 
 export const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
         questions: questionsSlice.reducer,
         attempt: attemptSlice.reducer,
         attempts: attemptsSlice.reducer,
+        stats: statsSlice.reducer,
     }
 })
 

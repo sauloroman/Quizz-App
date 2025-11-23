@@ -13,7 +13,7 @@ export const AuthLayout: React.FC<Props> = ({ children }) => {
     return (
         <div className={`
             min-h-screen
-            grid grid-cols-1 lg:grid-cols-5
+            grid grid-cols-1 lg:grid-cols-6
             content-center
             transition-colors duration-200
             ${isDarkTheme 
@@ -52,7 +52,7 @@ export const AuthLayout: React.FC<Props> = ({ children }) => {
                 </div>
             </div>
             <div className={`
-                lg:col-span-2
+                lg:col-span-3
                 hidden lg:flex h-screen items-center justify-center
                 ${isDarkTheme 
                     ? 'bg-[#3d4f5c]' 

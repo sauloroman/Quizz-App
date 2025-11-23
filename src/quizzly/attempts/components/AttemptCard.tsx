@@ -32,12 +32,7 @@ export const AttemptCard: React.FC<CardProps> = ({
   const totalQuestions = attempt.userAnswers.length
 
   return (
-    <div
-      className={`rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden ${isDarkTheme
-        ? 'bg-slate-800'
-        : 'bg-white'
-      }`}
-    >
+    <div className={`rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden ${isDarkTheme ? 'bg-slate-800' : 'bg-white'}`}>
 
       <div
         className="h-2 w-full"

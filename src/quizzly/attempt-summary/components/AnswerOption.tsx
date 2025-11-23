@@ -38,11 +38,7 @@ export const AnswerOption: React.FC<Props> = ({ answer, selectedAnswer, userAnsw
       <div className="flex items-center gap-3">
         <div>
           {isUserSelected && (
-            <i
-              className={`bx ${userAnswer.isCorrect ? 'bx-check-circle' : 'bx-x-circle'} text-xl ${
-                userAnswer.isCorrect ? 'text-green-500' : 'text-red-500'
-              }`}
-            ></i>
+            <i className={`bx ${userAnswer.isCorrect ? 'bx-check-circle' : 'bx-x-circle'} text-xl ${ userAnswer.isCorrect ? 'text-green-500' : 'text-red-500' }`}></i>
           )}
           {isCorrectAnswer && !userAnswer.isCorrect && (
             <i className="bx bx-check-circle text-xl text-green-500"></i>

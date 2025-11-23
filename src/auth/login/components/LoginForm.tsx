@@ -5,6 +5,7 @@ import { Input } from '../../../shared/components/Input'
 import { FormErrorMessage } from '../../../shared/components/FormErrorMessage'
 import { SubmitButton } from '../../../shared/components/SubmitButton'
 import { useAuth } from '../../../shared/hooks'
+import { OutlineButton } from '../../../shared/components/OutlineButton'
 
 interface LoginFormI {
     email: string,
@@ -58,7 +59,14 @@ export const LoginForm: React.FC = () => {
                 />
                 { errors.password && <FormErrorMessage errorMessage={errors.password.message} />}
             </div>
-            <SubmitButton submit className='mt-5' text='Iniciar Sesión'/>
+            <div className="flex items-center gap-3 mt-5">
+                <div className="flex-1">
+                    <SubmitButton submit text='Iniciar Sesión'/>
+                </div>
+                <div className='flex-1'>
+                    <OutlineButton text='Iniciar con Google' />
+                </div>
+            </div>
         </form>
     )
 }
