@@ -10,7 +10,7 @@ import {
 export const useStats = () => {
 
     const dispatch = useDispatch<any>()
-    const { isLoading, overallStats, progressData, quizStats, error } = useSelector((state: RootState) => state.stats)
+    const { isLoading, overallStats, progressData, quizStats } = useSelector((state: RootState) => state.stats)
 
     const calculateAllStats = () => {
         dispatch(startCalculatingAllStats())
@@ -33,7 +33,7 @@ export const useStats = () => {
         overallStats,
         progressData,
         quizStats,
-        error,
+
         calculateAllStats,
         calculateOverallStats,
         calculateQuizStats,
