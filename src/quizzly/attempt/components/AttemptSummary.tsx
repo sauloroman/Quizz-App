@@ -11,20 +11,27 @@ import { AttemptSummaryCorrectAnswers } from './AttemptSummaryCorrectAnswers'
 export const AttemptSummary: React.FC = () => {
     const { isDarkTheme } = useTheme()
     const { userAnswers, result, questionsAttempt, onSaveQuizAttempt } = useAttempt()
-    const [ showCorrectAnswers, setShowCorrectAnswers] = useState(false)
+    const [showCorrectAnswers, setShowCorrectAnswers] = useState(false)
     const { goToPage } = useNavigate()
-    
+
     if (!result) {
         return (
-            <MainLayout title='Resumen de intento'>
-                <div className={`flex items-center justify-center min-h-screen ${isDarkTheme ? 'bg-gray-900' : 'bg-gray-50'}`}>
-                    <p className={isDarkTheme ? 'text-gray-400' : 'text-gray-600'}>No hay datos de intento disponibles</p>
+            <MainLayout title="Resumen de intento">
+                <div className={`flex items-center justify-center h-[70vh] px-4 ${
+                    isDarkTheme ? 'bg-gray-900' : 'bg-gray-50'
+                }`}>
+                    <p className={isDarkTheme ? 'text-gray-400' : 'text-gray-600'}>
+                        No hay datos de intento disponibles
+                    </p>
                 </div>
             </MainLayout>
         )
     }
 
-    const scorePercentage = result.totalPoints > 0 ? Math.round((result.score / result.totalPoints) * 100) : 0
+    const scorePercentage = result.totalPoints > 0
+        ? Math.round((result.score / result.totalPoints) * 100)
+        : 0
+
     const correctAnswers = userAnswers.filter(a => a.isCorrect).length
     const totalQuestions = userAnswers.length
 
@@ -38,12 +45,14 @@ export const AttemptSummary: React.FC = () => {
     }
 
     return (
-        <MainLayout title='Resumen de intento'>
-            <div className={`min-h-screen px-4`}>
-                <div className="mx-auto grid grid-cols-4 gap-5">
+        <MainLayout title="Resumen de intento">
+            <div className="px-4 py-8">
 
-                    <section className='col-span-1'>
-                        <AttemptSummaryPercentage 
+                <div className="mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+                    <aside className="space-y-6 lg:col-span-1">
+
+                        <AttemptSummaryPercentage
                             cardClass={cardClass}
                             correctAnswers={correctAnswers}
                             isDarkTheme={isDarkTheme}
@@ -53,55 +62,50 @@ export const AttemptSummary: React.FC = () => {
                             textSecondaryClass={textSecondaryClass}
                             totalQuestions={totalQuestions}
                         />
-                        
+
                         <AttemptSummaryStats
-                            cardClass={ cardClass }
+                            cardClass={cardClass}
                             correctAnswers={correctAnswers}
                             result={result}
                             textPrimaryClass={textPrimaryClass}
                             textSecondaryClass={textSecondaryClass}
-                            totalQuestions={totalQuestions} 
+                            totalQuestions={totalQuestions}
                         />
 
-                        <div className="flex flex-col gap-5">
-                            <div className="flex-1">
-                                <SubmitButton 
-                                    onClick={ onSaveAttempt }
-                                    text='Aceptar' 
-                                />
-                            </div>
-                            <div className="flex-1">
-                                <OutlineButton 
-                                    onClick={() => setShowCorrectAnswers(!showCorrectAnswers)} 
-                                    text={showCorrectAnswers ? 'Ocultar Respuestas' : 'Ver Respuestas'}
-                                />
-                            </div>
+                        <div className="flex flex-col gap-4 pt-2">
+                            <SubmitButton
+                                onClick={onSaveAttempt}
+                                text="Aceptar"
+                            />
+
+                            <OutlineButton
+                                onClick={() => setShowCorrectAnswers(!showCorrectAnswers)}
+                                text={showCorrectAnswers ? 'Ocultar Respuestas' : 'Ver Respuestas'}
+                            />
                         </div>
+
+                    </aside>
+
+                    <section className="lg:col-span-3">
+                        {!showCorrectAnswers ? (
+                            <AttemptSummaryUserAnswers
+                                isDarkTheme={isDarkTheme}
+                                cardClass={cardClass}
+                                textPrimaryClass={textPrimaryClass}
+                                textSecondaryClass={textSecondaryClass}
+                                questionsAttempt={questionsAttempt}
+                                userAnswers={userAnswers}
+                            />
+                        ) : (
+                            <AttemptSummaryCorrectAnswers
+                                isDarkTheme={isDarkTheme}
+                                questions={questionsAttempt}
+                            />
+                        )}
                     </section>
 
-                    <section className='col-span-3'>
-                        {
-                            !showCorrectAnswers
-                            ? (
-                                <AttemptSummaryUserAnswers 
-                                    isDarkTheme={isDarkTheme}
-                                    cardClass={cardClass}
-                                    textPrimaryClass={textPrimaryClass}
-                                    textSecondaryClass={textSecondaryClass}
-                                    questionsAttempt={questionsAttempt}
-                                    userAnswers={userAnswers}
-                                />
-                            )
-                            : (
-                                <AttemptSummaryCorrectAnswers 
-                                    isDarkTheme={isDarkTheme}
-                                    questions={questionsAttempt}
-                                />
-                            )
-                        }
-                    </section>
                 </div>
-                    
+
             </div>
         </MainLayout>
     )

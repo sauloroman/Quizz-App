@@ -11,6 +11,7 @@ import { FormErrorMessage } from '../../../shared/components/FormErrorMessage'
 import { useQuestion } from '../../../shared/hooks/useQuestion'
 
 export const QuizzCreateQuestionForm: React.FC = () => {
+
     const { createQuestionInQuiz } = useQuestion()
     const { isDarkTheme } = useTheme()
 
@@ -23,16 +24,8 @@ export const QuizzCreateQuestionForm: React.FC = () => {
     } = useForm<CreateQuestionWithAnswers>({
         defaultValues: {
             correctAnswer: '',
-            question: {
-                questionText: '',
-                points: 1
-            },
-            answers: [
-                { answerText: '', isCorrect: false },
-                { answerText: '', isCorrect: false },
-                { answerText: '', isCorrect: false },
-                { answerText: '', isCorrect: false },
-            ]
+            question: { questionText: '', points: 1 },
+            answers: Array(4).fill({ answerText: '', isCorrect: false })
         }
     })
 
@@ -41,95 +34,99 @@ export const QuizzCreateQuestionForm: React.FC = () => {
     const onCreateNewQuestion = (data: CreateQuestionWithAnswers) => {
         const correctIndex = Number(data.correctAnswer)
 
-        const updatedAnswers = data.answers.map((ans, idx) => ({
-            ...ans,
-            isCorrect: idx === correctIndex
-        }))
-
         const finalData = {
             ...data,
-            answers: updatedAnswers
+            answers: data.answers.map((ans, idx) => ({
+                ...ans,
+                isCorrect: idx === correctIndex
+            }))
         }
 
         createQuestionInQuiz(finalData)
         reset()
     }
 
-    return (
-        <form className='space-y-6' onSubmit={handleSubmit(onCreateNewQuestion)}>
+    const answersContainerClasses = `
+        rounded-lg border p-4 transition-colors
+        ${isDarkTheme ? 'bg-gray-800/40 border-gray-700' : 'bg-gray-50 border-gray-200'}
+    `
 
-            <section className='flex flex-col sm:flex-row items-start sm:items-end gap-4'>
-                <div className='flex-1'>
-                    <Label text='Pregunta' />
-                    <Input 
+    const answerItemClasses = `
+        flex flex-col md:flex-row items-center gap-3 p-3 rounded-lg border transition-colors
+        ${isDarkTheme
+            ? 'bg-gray-800 border-gray-700 hover:border-gray-600'
+            : 'bg-white border-gray-200 hover:border-gray-300'}
+    `
+
+    const answerLabelClasses = `
+        w-20 shrink-0 text-sm font-medium 
+        ${isDarkTheme ? 'text-gray-300' : 'text-gray-700'}
+    `
+
+    return (
+        <form className="space-y-6" onSubmit={handleSubmit(onCreateNewQuestion)}>
+
+            <section className="flex flex-col sm:flex-row items-start sm:items-end gap-4">
+                <div className="flex-1 w-full">
+                    <Label text="Pregunta" />
+                    <Input
                         {...register('question.questionText', {
                             required: 'El texto de la pregunta es obligatorio'
                         })}
-                        type='text'
-                        placeholder='¿Cuál es el significado de...?'
+                        placeholder="¿Cuál es el significado de...?"
                     />
-                    { errors.question?.questionText && (
-                        <FormErrorMessage errorMessage={errors.question.questionText.message}/>
+                    {errors.question?.questionText && (
+                        <FormErrorMessage errorMessage={errors.question.questionText.message} />
                     )}
                 </div>
 
-                <div className='w-full sm:w-32'>
-                    <Label text='Puntos' />
+                <div className="w-full sm:w-32">
+                    <Label text="Puntos" />
                     <Select
                         {...register('question.points', {
                             required: 'Obligatorio',
                             valueAsNumber: true
                         })}
-                        placeholder='Cantidad' 
+                        placeholder="Cantidad"
                         options={['1', '2', '5', '10']}
                     />
-                    { errors.question?.points && (
-                        <FormErrorMessage errorMessage={errors.question.points.message}/>
+                    {errors.question?.points && (
+                        <FormErrorMessage errorMessage={errors.question.points.message} />
                     )}
                 </div>
             </section>
 
-            <section className={`rounded-lg border transition-colors p-4 ${isDarkTheme ? 'bg-gray-800/50 border-gray-700' : 'bg-gray-50 border-gray-200'}`}>
-                <p className={`mb-4 text-sm font-semibold ${
-                    isDarkTheme ? 'text-gray-100' : 'text-gray-800'
-                }`}>
+            <section className={answersContainerClasses}>
+                <p className={`mb-4 text-sm font-semibold ${isDarkTheme ? 'text-gray-100' : 'text-gray-800'}`}>
                     Selecciona una opción como la respuesta correcta
                 </p>
 
-                <div className='space-y-3'>
-                    {fields.map((field, answerIndex) => (
-                        <div 
-                            key={field.id}
-                            className={`flex items-center gap-3 p-3 rounded-lg transition-colors border ${
-                                isDarkTheme
-                                    ? 'bg-gray-800 border-gray-700 hover:border-gray-600'
-                                    : 'bg-white border-gray-200 hover:border-gray-300'
-                            }`}
-                        >
-                            <div className='shrink-0'>
+                <div className="space-y-3">
+                    {fields.map((field, index) => (
+                        <div key={field.id} className={answerItemClasses}>
+
+                            <div className="shrink-0">
                                 <InputRadio
-                                    {...register("correctAnswer", { required: true })}
-                                    type='radio'
-                                    value={answerIndex}
+                                    {...register('correctAnswer', { required: true })}
+                                    value={index}
                                 />
                             </div>
 
-                            <label className={`w-16 shrink-0 text-sm font-medium ${
-                                isDarkTheme ? 'text-gray-300' : 'text-gray-700'
-                            }`}>
-                                Opción {answerIndex + 1}
+                            <label className={answerLabelClasses}>
+                                Opción {index + 1}
                             </label>
-                            
+
                             <div className="flex-1">
-                                <Input 
-                                    {...register(`answers.${answerIndex}.answerText`, {
+                                <Input
+                                    {...register(`answers.${index}.answerText`, {
                                         required: 'La respuesta es obligatoria'
                                     })}
-                                    placeholder='Escribe la opción'
-                                    className='flex-1'
+                                    placeholder="Escribe la opción"
                                 />
-                                { errors.answers?.[answerIndex]?.answerText && (
-                                    <FormErrorMessage errorMessage={errors.answers[answerIndex]?.answerText?.message}/>
+                                {errors.answers?.[index]?.answerText && (
+                                    <FormErrorMessage
+                                        errorMessage={errors.answers[index]?.answerText?.message}
+                                    />
                                 )}
                             </div>
                         </div>
@@ -137,19 +134,14 @@ export const QuizzCreateQuestionForm: React.FC = () => {
                 </div>
 
                 {errors.correctAnswer && (
-                    <FormErrorMessage errorMessage='Debes seleccionar una respuesta correcta'/>
+                    <FormErrorMessage errorMessage="Debes seleccionar una respuesta correcta" />
                 )}
             </section>
 
-            <div className='flex gap-3 justify-end pt-4'>
-                <div className="w-48">
-                    <SubmitButton 
-                        className='w-fit'
-                        submit
-                        text='Guardar Pregunta'
-                    />
-                </div>
+            <div className="flex justify-end pt-4">
+                <SubmitButton submit text="Guardar Pregunta" className="w-fit" />
             </div>
+
         </form>
     )
 }

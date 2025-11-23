@@ -7,7 +7,6 @@ import { AttemptCard } from './components/AttemptCard'
 import type { AttemptDBWithAnswers } from '../../interfaces/quizzly.interface'
 import { Spinner } from '../../shared/components/Spinner'
 
-
 export const AttemptsPage: React.FC = () => {
   const { isDarkTheme } = useTheme()
   const { attempts, getAttemptsOfUser, isLoading } = useAttempts()
@@ -39,37 +38,53 @@ export const AttemptsPage: React.FC = () => {
 
   return (
     <MainLayout title='Tus intentos de resolver un quizz'>
-      {
-        isLoading
-          ? (
-            <div className='h-screen flex flex-col items-center justify-center py-20 gap-4'>
-              <Spinner />
-              <p className={`text-sm ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>
-                Cargando...
-              </p>
-            </div>
-          )
-          : (
-            <>
-              <AttemptsHeader isDarkTheme={isDarkTheme} totalAttempts={attempts.length} />
+      {isLoading ? (
+        <div className='h-screen flex flex-col items-center justify-center py-20 gap-4'>
+          <Spinner />
+          <p className={`text-sm ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}`}>
+            Cargando...
+          </p>
+        </div>
+      ) : (
+        <>
 
-              <div className="grid md:grid-cols-2 gap-5">
-                {attempts.map((attempt: AttemptDBWithAnswers) => (
-                  <AttemptCard
-                    key={attempt.result.id}
-                    attempt={attempt}
-                    isExpanded={expandedAttempt === attempt.result.id}
-                    isDarkTheme={isDarkTheme}
-                    onToggle={() => setExpandedAttempt(expandedAttempt === attempt.result.id ? null : attempt.result.id)}
-                    getScorePercentage={getScorePercentage}
-                    getScoreColor={getScoreColor}
-                    getScoreBadgeColor={getScoreBadgeColor}
-                  />
-                ))}
-              </div>
-            </>
-          )
-      }
+          <div className="px-2 sm:px-0">
+            <AttemptsHeader
+              isDarkTheme={isDarkTheme}
+              totalAttempts={attempts.length}
+            />
+          </div>
+
+          <div className="
+            grid
+            grid-cols-1
+            sm:grid-cols-2
+            gap-4 sm:gap-5
+            px-2 sm:px-0
+            pb-6
+          ">
+            {attempts.map((attempt: AttemptDBWithAnswers) => (
+              <AttemptCard
+                key={attempt.result.id}
+                attempt={attempt}
+                isExpanded={expandedAttempt === attempt.result.id}
+                isDarkTheme={isDarkTheme}
+                onToggle={() =>
+                  setExpandedAttempt(
+                    expandedAttempt === attempt.result.id
+                      ? null
+                      : attempt.result.id
+                  )
+                }
+                getScorePercentage={getScorePercentage}
+                getScoreColor={getScoreColor}
+                getScoreBadgeColor={getScoreBadgeColor}
+              />
+            ))}
+          </div>
+
+        </>
+      )}
     </MainLayout>
   )
 }

@@ -1,23 +1,22 @@
 import React from 'react'
 import { formatDate } from '../../../shared/helpers/format-date'
 import { useNavigate, useQuiz, useTheme } from '../../../shared/hooks'
-import { IconButton } from '../../../shared/components/IconButton'
 
 interface Props {
-  id: string,
-  title: string,
-  description: string,
-  subject: string,
-  color: string,
-  createdAt: Date,
+  id: string
+  title: string
+  description: string
+  subject: string
+  color: string
+  createdAt: Date
 }
 
-export const QuizItem: React.FC<Props> = ({ 
-  id, 
-  title, 
-  description, 
-  subject, 
-  color, 
+export const QuizItem: React.FC<Props> = ({
+  id,
+  title,
+  description,
+  subject,
+  color,
   createdAt,
 }) => {
 
@@ -30,60 +29,58 @@ export const QuizItem: React.FC<Props> = ({
     goToPage(`quizz/${id}`)
   }
 
+  const containerClasses = `
+    rounded-lg border overflow-hidden flex flex-col h-full 
+    cursor-pointer transition-all hover:shadow-lg
+    ${isDarkTheme
+      ? 'bg-gray-800 border-gray-700 hover:border-gray-600'
+      : 'bg-white border-gray-200 hover:border-gray-300'
+    }
+  `
+
+  const titleClasses = `
+    text-lg font-semibold truncate
+    ${isDarkTheme ? 'text-gray-100' : 'text-gray-900'}
+  `
+
+  const descriptionClasses = `
+    text-sm line-clamp-2 mb-4
+    ${isDarkTheme ? 'text-gray-400' : 'text-gray-600'}
+  `
+
+  const subjectClasses = `
+    inline-flex items-center w-fit px-3 py-1 rounded-full text-xs font-medium
+    ${isDarkTheme ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-700'}
+  `
+
   return (
-    <li
-      className={`rounded-lg border transition-all hover:shadow-lg cursor-pointer overflow-hidden flex flex-col h-full ${
-        isDarkTheme
-          ? 'bg-gray-800 border-gray-700 hover:border-gray-600'
-          : 'bg-white border-gray-200 hover:border-gray-300'
-      }`}
-    >
+    <li onClick={onSelectQuiz} className={containerClasses}>
       <div
         className="h-2 w-full"
         style={{ backgroundColor: color || '#6B7280' }}
       />
-      
-      <div className="p-4 flex flex-col flex-1">
-        
-        <div className="mb-3">
-          <h3 className={`text-lg font-semibold truncate ${
-            isDarkTheme ? 'text-gray-100' : 'text-gray-900'
-          }`}>
-            {title}
-          </h3>
-        </div>
-        
+
+      <div className="p-4 flex flex-col flex-1 gap-4">
+
+        <h3 className={titleClasses}>{title}</h3>
+
         {description && (
-          <p className={`text-sm mb-4 line-clamp-2 ${
-            isDarkTheme ? 'text-gray-400' : 'text-gray-600'
-          }`}>
+          <p className={descriptionClasses}>
             {description}
           </p>
         )}
-        
-        <div className="flex flex-col gap-2 flex-1">
-          <span
-            className={`inline-flex items-center w-fit px-3 py-1 rounded-full text-xs font-medium ${
-              isDarkTheme ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-700'
-            }`}
-          >
+
+        <div className="flex flex-col gap-2 mt-auto">
+          <span className={subjectClasses}>
             {subject}
           </span>
-          
-          <span className={`text-xs ${
-            isDarkTheme ? 'text-gray-500' : 'text-gray-500'
-          }`}>
+
+          <span className="text-xs text-gray-500">
             {formatDate(createdAt)}
           </span>
-        </div>  
+        </div>
       </div>
-      
-      <div className="flex justify-end p-4 pb-2">
-          <IconButton onClick={onSelectQuiz}>
-            <i className='bxr bx-eye'></i> 
-          </IconButton>
-      </div>
-      
+
     </li>
   )
 }

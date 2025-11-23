@@ -7,11 +7,27 @@ interface HeaderProps {
 
 export const AttemptsHeader: React.FC<HeaderProps> = ({ isDarkTheme, totalAttempts }) => {
   return (
-    <div className="mb-8">
-      <h1 className={`text-4xl font-bold mb-2 ${isDarkTheme ? 'text-white' : 'text-slate-900'}`}>Tus intentos</h1>
-      <p className={isDarkTheme ? 'text-slate-400' : 'text-slate-600'}>
-        Total de intentos: <span className={`font-semibold ${isDarkTheme ? 'text-white' : 'text-slate-900'}`}>{totalAttempts}</span>
+    <header className="mb-10">
+      <h1
+        className={` 
+          font-bold mb-2 tracking-tight
+          text-3xl md:text-4xl
+          ${isDarkTheme ? 'text-white' : 'text-slate-900'}
+        `}
+      >
+        Tus intentos
+      </h1>
+
+      <p className={`text-base md:text-lg ${isDarkTheme ? 'text-slate-400' : 'text-slate-600'}`}>
+        Total de intentos:{' '}
+        <span
+          className={`font-semibold ${
+            isDarkTheme ? 'text-white' : 'text-slate-900'
+          }`}
+        >
+          {totalAttempts}
+        </span>
       </p>
-    </div>
+    </header>
   )
 }

@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react'
-import { QuizzCover } from './components/QuizzCover'
-import { useAuth, useModal, useQuiz } from '../../shared/hooks'
+import React, { useEffect, useMemo } from 'react'
 import { MainLayout } from '../../layout/MainLayout'
+import { useAuth, useModal, useQuiz } from '../../shared/hooks'
+import { useQuestion } from '../../shared/hooks/useQuestion'
+
+import { QuizzCover } from './components/QuizzCover'
 import { QuizzInfo } from './components/QuizzInfo'
 import { QuizzListQuestions } from './components/QuizzListQuestions'
 import { QuizzHeaderQuestionsCounter } from './components/QuizzHeaderQuestionsCounter'
-import { useQuestion } from '../../shared/hooks/useQuestion'
 import { QuizzEmptyQuestions } from './components/QuizzEmptyQuestions'
 import { QuizzActions } from './components/QuizzActions'
 import { Spinner } from '../../shared/components/Spinner'
+
 import { ModalNames } from '../../interfaces/ui.interface'
 import { QuizModalInitAttempt } from './components/QuizModalInitAttempt'
 import { QuestionModalEditQuestion } from './components/QuestionModalEditQuestion'
@@ -20,57 +22,68 @@ export const Quizz: React.FC = () => {
   const { quizSelected } = useQuiz()
   const { questions, getQuestionsFromQuiz, isLoading } = useQuestion()
   const { user } = useAuth()
-  const { modal: { isOpen: modalIsOpen, name: modalName } } = useModal()
-  
-  if (!quizSelected || !user ) return null
+  const { modal } = useModal()
+
+  if (!quizSelected || !user) return null
+
+  const quizColor = quizSelected.color ?? '#000000'
 
   useEffect(() => {
     getQuestionsFromQuiz(quizSelected.id)
   }, [quizSelected.id])
 
+  const totalQuestions = useMemo(() => questions.length, [questions])
+
   return (
     <MainLayout title={quizSelected.title}>
-      <div className='w-[95%] mx-auto -mt-10'>
-        <QuizzCover 
-          quizImage={quizSelected.image}
+      <div className="w-[95%] mx-auto -mt-10">
+        <QuizzCover
           quizId={quizSelected.id}
+          quizImage={quizSelected.image}
           quizzTitle={quizSelected.title}
-          quizzColor={quizSelected.color ?? '#000000'}
+          quizzColor={quizColor}
         />
 
-        <main className='grid grid-cols-7 gap-4 my-5'>
-          <div className='col-span-2'>
-            <QuizzInfo 
-              user={ user }
-              color={quizSelected.color ?? '#000000'}
-              description={quizSelected.description ?? 'Quiz sin descripción'}
+        <main className="grid grid-cols-1 lg:grid-cols-7 gap-4 my-5">
+          <div className="lg:col-span-2">
+            <QuizzInfo
+              user={user}
+              color={quizColor}
               subject={quizSelected.subject}
+              description={quizSelected.description ?? 'Quiz sin descripción'}
               createdAt={quizSelected.createdAt}
               updatedAt={quizSelected.updatedAt}
             />
-            <QuizzActions 
+
+            <QuizzActions
               quizId={quizSelected.id}
-              quizColor={quizSelected.color ?? '#000000'}
+              quizColor={quizColor}
             />
           </div>
-          <div className="col-span-5">
-            <QuizzHeaderQuestionsCounter quizColor={quizSelected.color ?? '#000000'} questionsCounter={questions.length}/>
-            {
-              questions.length === 0
-              ? (<QuizzEmptyQuestions />)
-              : (
-                isLoading
-                ? (<div className='my-12 lg:h-80 flex justify-center items-center'><Spinner /></div>)
-                : (<QuizzListQuestions questions={questions} />)
-              )
-            }
+
+          <div className="lg:col-span-5">
+            <QuizzHeaderQuestionsCounter
+              quizColor={quizColor}
+              questionsCounter={totalQuestions}
+            />
+
+            {isLoading ? (
+              <div className="my-12 lg:h-80 flex justify-center items-center">
+                <Spinner />
+              </div>
+            ) : (
+              totalQuestions === 0
+                ? <QuizzEmptyQuestions />
+                : <QuizzListQuestions questions={questions} />
+            )}
           </div>
         </main>
       </div>
-      { modalIsOpen && modalName === ModalNames.confirmDeleteQuizz && <QuizConfirmDelete />}
-      { modalIsOpen && modalName === ModalNames.confirmInitAttempt && <QuizModalInitAttempt />}
-      { modalIsOpen && modalName === ModalNames.editQuestion && <QuestionModalEditQuestion />}
-      { modalIsOpen && modalName === ModalNames.deleteQuestion && <QuestionConfirmDelete />}
+
+      {modal.isOpen && modal.name === ModalNames.confirmDeleteQuizz && <QuizConfirmDelete />}
+      {modal.isOpen && modal.name === ModalNames.confirmInitAttempt && <QuizModalInitAttempt />}
+      {modal.isOpen && modal.name === ModalNames.editQuestion && <QuestionModalEditQuestion />}
+      {modal.isOpen && modal.name === ModalNames.deleteQuestion && <QuestionConfirmDelete />}
     </MainLayout>
   )
 }

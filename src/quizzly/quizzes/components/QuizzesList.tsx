@@ -8,7 +8,7 @@ interface Props {
 
 export const QuizzesList: React.FC<Props> = ({ quizzes }) => {
     return (
-        <ul className='grid grid-cols-4 gap-3'>
+        <ul className='grid lg:grid-cols-4 gap-3'>
             {
                 quizzes.map( quiz => (
                     <QuizItem
