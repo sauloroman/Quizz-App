@@ -9,7 +9,8 @@ export const AttemptQuestion: React.FC = () => {
     if (!currentQuestion) return
 
     return (
-        <div className={`
+        <div className={`   
+            animate__animated animate__fadeInDown
             w-[95%] mx-auto lg:w-full
             rounded-2xl border overflow-hidden 
             transition-all duration-300 

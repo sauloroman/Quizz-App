@@ -50,7 +50,7 @@ export const AttemptSummary: React.FC = () => {
 
                 <div className="mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
 
-                    <aside className="space-y-6 lg:col-span-1">
+                    <aside className="space-y-6 lg:col-span-1 animate__animated animate__fadeInRight">
 
                         <AttemptSummaryPercentage
                             cardClass={cardClass}
@@ -86,7 +86,7 @@ export const AttemptSummary: React.FC = () => {
 
                     </aside>
 
-                    <section className="lg:col-span-3">
+                    <section className="lg:col-span-3 animate__animated animate__fadeInLeft">
                         {!showCorrectAnswers ? (
                             <AttemptSummaryUserAnswers
                                 isDarkTheme={isDarkTheme}

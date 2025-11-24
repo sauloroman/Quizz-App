@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate, useQuiz, useTheme } from '../../shared/hooks'
 import { MainLayout } from '../../layout/MainLayout'
 import { QuizzesList } from './components/QuizzesList'
@@ -6,9 +6,13 @@ import { EmptyQuizzes } from './components/EmptyQuizzes'
 import { SubmitButton } from '../../shared/components/SubmitButton'
 
 export const Quizzes: React.FC = () => {
-  const { quizes } = useQuiz()
+  const { quizes, getQuizzes } = useQuiz()
   const { isDarkTheme } = useTheme()
   const { goToPage } = useNavigate()
+
+  useEffect(() => {
+    getQuizzes()
+  }, [])
 
   return (
     <MainLayout title='Tus Creaciones'>

@@ -15,6 +15,7 @@ export const AttemptResult: React.FC = () => {
 
     return (
         <div className={`
+            animate__animated animate__bounce
             m-8 rounded-3xl border overflow-hidden 
             transition-all duration-500 backdrop-blur-sm
             ${isCorrectAnswer

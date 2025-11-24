@@ -48,7 +48,7 @@ export const AuthLayout: React.FC<Props> = ({ children }) => {
                         alt='Logo Quizzly' 
                     />
                 </div>
-                <div className="relative z-10 flex flex-col justify-center items-center lg:h-[90vh]">
+                <div className="relative z-10 flex flex-col justify-center items-center lg:h-[90vh] animate__animated animate__fadeInLeft">
                     {children}
                 </div>
             </div>

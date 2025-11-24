@@ -89,8 +89,10 @@ export const RegisterForm: React.FC = () => {
                 </div>
                 {errors.password && <FormErrorMessage errorMessage={errors.password.message} />}
             </div>
-
-            <SubmitButton className='mt-5' text='Crear Cuenta' type='submit' />
+            
+            <div className="mt-5">
+                <SubmitButton text='Crear Cuenta' type='submit' />
+            </div>
         </form>
     )
 }

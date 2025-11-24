@@ -5,41 +5,55 @@ import { startCreatingUserWithEmail, startLoggingOutUser, startLoggingUserWithEm
 import { onAuthStateChanged } from "firebase/auth"
 import { FirebaseAuth } from "../../config/firebase/config"
 import { login, logout } from "../../store/auth/auth.slice"
+import { resetAttemptState } from "../../store/attempt/attempt.slice"
+import { resetAttemptsState } from "../../store/attempts/attempts.slice"
+import { resetQuestionsState } from "../../store/questions/questions.slice"
+import { resetQuizzesState } from "../../store/quizzes/quizzes.slice"
+import { resetStatsState } from "../../store/stats/stats.slice"
+import { resetUIState } from "../../store/ui/ui.slice"
 
 export const useAuth = () => {
 
     const dispatch = useDispatch<any>()
-    const { user, isLoading, status } = useSelector( (state: RootState) => state.auth )
+    const { user, isLoading, status } = useSelector((state: RootState) => state.auth)
 
-    const registerUser = ( data: RegisterUserWithEmail ) => {
-        dispatch( startCreatingUserWithEmail(data) )
+    const registerUser = (data: RegisterUserWithEmail) => {
+        dispatch(startCreatingUserWithEmail(data))
     }
 
-    const loginUser = ( data: LoginWithEmailAndPassword ) => {
-        dispatch( startLoggingUserWithEmail(data) )
+    const loginUser = (data: LoginWithEmailAndPassword) => {
+        dispatch(startLoggingUserWithEmail(data))
     }
 
     const loginUserWithGoogle = () => {
-        dispatch( startLoggingWithGoogle() )
+        dispatch(startLoggingWithGoogle())
     }
 
     const logoutUser = () => {
-        dispatch( startLoggingOutUser() )
+        dispatch(startLoggingOutUser())
     }
 
     const checkAuth = () => {
-        onAuthStateChanged( FirebaseAuth, async (user) => {
-            if (!user) return dispatch( logout() )
+        onAuthStateChanged(FirebaseAuth, async (user) => {
 
-            const { displayName, email, uid } = user!
+            if (!user) {
+                dispatch(logout())
+                dispatch(resetAttemptState())
+                dispatch(resetAttemptsState())
+                dispatch(resetQuestionsState())
+                dispatch(resetQuizzesState())
+                dispatch(resetStatsState())
+                dispatch(resetUIState())
+                return
+            }
 
-            dispatch( login({ 
-                name: displayName!, 
-                email: email!, 
-                id: uid!,
+            dispatch(login({
+                id: user.uid,
+                email: user.email!,
+                name: user.displayName!,
                 createdAt: new Date(user.metadata.creationTime!)
             }))
-        } )
+        })
     }
 
     return {
