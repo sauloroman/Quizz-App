@@ -20,12 +20,17 @@ export const LoginForm: React.FC = () => {
         reset,
         formState: { errors }
     } = useForm<LoginFormI>()
-    const { loginUser } = useAuth()
+    const { loginUser, loginUserWithGoogle } = useAuth()
     
     const onLoginUser = ( data: LoginFormI ) => {
         loginUser( data )
         reset()
     }   
+
+    const onLoginGoogle = () => {
+        loginUserWithGoogle()
+        reset()
+    }
 
     return (
         <form onSubmit={handleSubmit(onLoginUser)} className='flex flex-col gap-3'>
@@ -64,7 +69,7 @@ export const LoginForm: React.FC = () => {
                     <SubmitButton submit text='Iniciar Sesión'/>
                 </div>
                 <div className='flex-1'>
-                    <OutlineButton text='Iniciar con Google' />
+                    <OutlineButton onClick={onLoginGoogle} text='Iniciar con Google' />
                 </div>
             </div>
         </form>

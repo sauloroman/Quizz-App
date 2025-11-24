@@ -11,41 +11,56 @@ import type { OverallStats, QuizStats, UserProgressData, AttemptDBWithAnswers } 
 import { FirebaseDB } from "../../config/firebase/config"
 import { collection, getDocs } from "firebase/firestore/lite"
 
+const getUserAttempts = async (userId: string): Promise<AttemptDBWithAnswers[]> => {
+    const attemptsRef = collection(FirebaseDB, "attempts")
+    const attemptsSnapshot = await getDocs(attemptsRef)
+
+    const attempts: AttemptDBWithAnswers[] = []
+
+    for (const attemptDoc of attemptsSnapshot.docs) {
+        const attemptData = attemptDoc.data()
+        
+        if (attemptData.userId !== userId) {
+            continue
+        }
+
+        const userAnswersRef = collection(FirebaseDB, `attempts/${attemptDoc.id}/userAnswers`)
+        const userAnswersSnapshot = await getDocs(userAnswersRef)
+        
+        const userAnswers = userAnswersSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        })) as any[]
+
+        attempts.push({
+            result: {
+                id: attemptDoc.id,
+                quizId: attemptData.quizId,
+                userId: attemptData.userId,
+                score: attemptData.score,
+                totalPoints: attemptData.totalPoints,
+                completedAt: attemptData.completedAt?.toDate?.() || new Date(),
+            },
+            userAnswers
+        })
+    }
+
+    return attempts
+}
+
 export const startCalculatingAllStats = () => {
     return async (dispatch: Dispatch, getState: () => RootState) => {
         dispatch(setIsLoading(true))
         try {
-            // Obtener intentos desde Firebase
-            const attemptsRef = collection(FirebaseDB, "attempts")
-            const attemptsSnapshot = await getDocs(attemptsRef)
-
-            const attempts: AttemptDBWithAnswers[] = []
-
-            // Mapear cada intento con sus respuestas
-            for (const attemptDoc of attemptsSnapshot.docs) {
-                const attemptData = attemptDoc.data()
-                
-                // Obtener user answers para este intento
-                const userAnswersRef = collection(FirebaseDB, `attempts/${attemptDoc.id}/userAnswers`)
-                const userAnswersSnapshot = await getDocs(userAnswersRef)
-                
-                const userAnswers = userAnswersSnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                })) as any[]
-
-                attempts.push({
-                    result: {
-                        id: attemptDoc.id,
-                        quizId: attemptData.quizId,
-                        userId: attemptData.userId,
-                        score: attemptData.score,
-                        totalPoints: attemptData.totalPoints,
-                        completedAt: attemptData.completedAt?.toDate?.() || new Date(),
-                    },
-                    userAnswers
-                })
+            const { auth: { user } } = getState()
+            if (!user) {
+                dispatch(setError("Usuario no autenticado"))
+                return
             }
+
+            const userId = user.id
+
+            const attempts = await getUserAttempts(userId)
 
             if (attempts.length === 0) {
                 dispatch(setOverallStats(null))
@@ -54,11 +69,9 @@ export const startCalculatingAllStats = () => {
                 return
             }
 
-            // Obtener quizzes disponibles
             const { quizzes: { quizes: allQuizzes } } = getState()
             const totalQuizzesAvailable = allQuizzes?.length || 0
 
-            // === OVERALL STATS ===
             const totalQuizzesTaken = new Set(attempts.map(a => a.result.quizId)).size
             const totalQuestionsAnswered = attempts.reduce((sum, a) => sum + a.userAnswers.length, 0)
             const totalCorrectAnswers = attempts.reduce(
@@ -97,7 +110,6 @@ export const startCalculatingAllStats = () => {
 
             dispatch(setOverallStats(overallStats))
 
-            // === QUIZ STATS ===
             const attemptsByQuiz: { [key: string]: AttemptDBWithAnswers[] } = {}
             attempts.forEach(attempt => {
                 const quizId = attempt.result.quizId
@@ -229,34 +241,15 @@ export const startCalculatingOverallStats = () => {
     return async (dispatch: Dispatch, getState: () => RootState) => {
         dispatch(setIsLoading(true))
         try {
-            const attemptsRef = collection(FirebaseDB, "attempts")
-            const attemptsSnapshot = await getDocs(attemptsRef)
-
-            const attempts: AttemptDBWithAnswers[] = []
-
-            for (const attemptDoc of attemptsSnapshot.docs) {
-                const attemptData = attemptDoc.data()
-                
-                const userAnswersRef = collection(FirebaseDB, `attempts/${attemptDoc.id}/userAnswers`)
-                const userAnswersSnapshot = await getDocs(userAnswersRef)
-                
-                const userAnswers = userAnswersSnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                })) as any[]
-
-                attempts.push({
-                    result: {
-                        id: attemptDoc.id,
-                        quizId: attemptData.quizId,
-                        userId: attemptData.userId,
-                        score: attemptData.score,
-                        totalPoints: attemptData.totalPoints,
-                        completedAt: attemptData.completedAt?.toDate?.() || new Date(),
-                    },
-                    userAnswers
-                })
+            const { auth: { user } } = getState()
+            if (!user) {
+                dispatch(setError("Usuario no autenticado"))
+                return
             }
+
+            const userId = user.id
+
+            const attempts = await getUserAttempts(userId)
 
             if (!attempts || attempts.length === 0) {
                 dispatch(setOverallStats(null))
@@ -313,37 +306,18 @@ export const startCalculatingOverallStats = () => {
 }
 
 export const startCalculatingQuizStats = () => {
-    return async (dispatch: Dispatch) => {
+    return async (dispatch: Dispatch, getState: () => RootState) => {
         dispatch(setIsLoading(true))
         try {
-            const attemptsRef = collection(FirebaseDB, "attempts")
-            const attemptsSnapshot = await getDocs(attemptsRef)
-
-            const attempts: AttemptDBWithAnswers[] = []
-
-            for (const attemptDoc of attemptsSnapshot.docs) {
-                const attemptData = attemptDoc.data()
-                
-                const userAnswersRef = collection(FirebaseDB, `attempts/${attemptDoc.id}/userAnswers`)
-                const userAnswersSnapshot = await getDocs(userAnswersRef)
-                
-                const userAnswers = userAnswersSnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                })) as any[]
-
-                attempts.push({
-                    result: {
-                        id: attemptDoc.id,
-                        quizId: attemptData.quizId,
-                        userId: attemptData.userId,
-                        score: attemptData.score,
-                        totalPoints: attemptData.totalPoints,
-                        completedAt: attemptData.completedAt?.toDate?.() || new Date(),
-                    },
-                    userAnswers
-                })
+            const { auth: { user } } = getState()
+            if (!user) {
+                dispatch(setError("Usuario no autenticado"))
+                return
             }
+
+            const userId = user.id
+
+            const attempts = await getUserAttempts(userId)
 
             if (!attempts || attempts.length === 0) {
                 dispatch(setQuizStats([]))
@@ -395,37 +369,18 @@ export const startCalculatingQuizStats = () => {
 }
 
 export const startCalculatingProgressData = () => {
-    return async (dispatch: Dispatch) => {
+    return async (dispatch: Dispatch, getState: () => RootState) => {
         dispatch(setIsLoading(true))
         try {
-            const attemptsRef = collection(FirebaseDB, "attempts")
-            const attemptsSnapshot = await getDocs(attemptsRef)
-
-            const attempts: AttemptDBWithAnswers[] = []
-
-            for (const attemptDoc of attemptsSnapshot.docs) {
-                const attemptData = attemptDoc.data()
-                
-                const userAnswersRef = collection(FirebaseDB, `attempts/${attemptDoc.id}/userAnswers`)
-                const userAnswersSnapshot = await getDocs(userAnswersRef)
-                
-                const userAnswers = userAnswersSnapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                })) as any[]
-
-                attempts.push({
-                    result: {
-                        id: attemptDoc.id,
-                        quizId: attemptData.quizId,
-                        userId: attemptData.userId,
-                        score: attemptData.score,
-                        totalPoints: attemptData.totalPoints,
-                        completedAt: attemptData.completedAt?.toDate?.() || new Date(),
-                    },
-                    userAnswers
-                })
+            const { auth: { user } } = getState()
+            if (!user) {
+                dispatch(setError("Usuario no autenticado"))
+                return
             }
+
+            const userId = user.id
+
+            const attempts = await getUserAttempts(userId)
 
             if (!attempts || attempts.length === 0) {
                 dispatch(setProgressData(null))

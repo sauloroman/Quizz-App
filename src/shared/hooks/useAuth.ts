@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RootState } from "../../store"
 import type { LoginWithEmailAndPassword, RegisterUserWithEmail } from "../../interfaces/auth.interface"
-import { startCreatingUserWithEmail, startLoggingOutUser, startLoggingUserWithEmail } from "../../store/auth/auth.thunk"
+import { startCreatingUserWithEmail, startLoggingOutUser, startLoggingUserWithEmail, startLoggingWithGoogle } from "../../store/auth/auth.thunk"
 import { onAuthStateChanged } from "firebase/auth"
 import { FirebaseAuth } from "../../config/firebase/config"
 import { login, logout } from "../../store/auth/auth.slice"
@@ -17,6 +17,10 @@ export const useAuth = () => {
 
     const loginUser = ( data: LoginWithEmailAndPassword ) => {
         dispatch( startLoggingUserWithEmail(data) )
+    }
+
+    const loginUserWithGoogle = () => {
+        dispatch( startLoggingWithGoogle() )
     }
 
     const logoutUser = () => {
@@ -49,5 +53,6 @@ export const useAuth = () => {
         loginUser,
         logoutUser,
         checkAuth,
+        loginUserWithGoogle,
     }
 }

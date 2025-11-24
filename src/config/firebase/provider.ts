@@ -11,26 +11,22 @@ import type { User } from "../../interfaces/quizzly.interface"
 
 const googleProvider = new GoogleAuthProvider()
 
-export const singInWithGoogle = async () => {
+export const singInWithGoogle = async (): Promise<Omit<User, 'password'>> => {
     try {
         const result = await signInWithPopup( FirebaseAuth, googleProvider ) 
         const user = result.user
-        const { displayName, email, photoURL, uid } = user
+        const { displayName, email, uid } = user
 
         return {
-            ok: true,
-            displayName,
-            email,
-            photoURL,
-            uid
+            id: uid,
+            name: displayName ?? '',
+            email: email ?? '',
+            createdAt: new Date(result.user.metadata.creationTime!)
         }
 
     } catch (error) {
-        console.log(error)
-        return {
-            ok: false,
-            errorMessage: (error as Error).message
-        }
+        console.error(error)
+        throw error
     }
 
 }
