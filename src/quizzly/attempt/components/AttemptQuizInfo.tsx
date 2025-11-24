@@ -19,6 +19,7 @@ export const AttemptQuizInfo: React.FC = () => {
 
     return (
         <div className={`
+            w-[95%] mx-auto lg:w-full
             rounded-2xl border overflow-hidden mb-5
             transition-all duration-300
             ${isDarkTheme 
@@ -33,7 +34,7 @@ export const AttemptQuizInfo: React.FC = () => {
                     <div className="w-fit"><SubmitButton className='text-sm' onClick={onFinishAttempt} text='Finalizar Intento' /></div>
                 </header>
                 <div className={`
-                    flex items-center gap-4 py-2 px-6 rounded-lg
+                    flex flex-col lg:flex-row items-center gap-4 py-2 px-6 rounded-lg
                     ${isDarkTheme 
                         ? 'bg-gray-700/40 border border-gray-600' 
                         : 'bg-gray-100 border border-gray-200'

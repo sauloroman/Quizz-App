@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAuth, useNavigate, useTheme } from '../hooks'
+import { useAuth, useTheme } from '../hooks'
 import logoDark from '../../assets/img/logo-dark-mode.png'
 import { NavLink } from 'react-router-dom'
 
@@ -11,7 +11,6 @@ export const Header: React.FC<Props> = ({ title }) => {
 
     const { isDarkTheme, activateDarkTheme, activateLightTheme } = useTheme()
     const { logoutUser } = useAuth()
-    const { returnPage } = useNavigate()
 
     const toggleTheme = () => {
         isDarkTheme ? activateLightTheme() : activateDarkTheme()
@@ -33,7 +32,6 @@ export const Header: React.FC<Props> = ({ title }) => {
             `}
         >
 
-            {/* Left section */}
             <div className='flex items-center gap-3 sm:gap-4'>
 
                 <img
@@ -58,21 +56,6 @@ export const Header: React.FC<Props> = ({ title }) => {
                     >
                         <i className='bx bxs-home text-xl sm:text-lg'></i>
                     </NavLink>
-
-                    <button
-                        onClick={returnPage}
-                        className={`
-                            cursor-pointer p-2 rounded-lg
-                            transition-all duration-200 flex items-center justify-center
-                            ${isDarkTheme
-                                ? 'text-gray-400 hover:text-white hover:bg-gray-800'
-                                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                            }
-                        `}
-                    >
-                        <i className='bx bx-chevron-left text-2xl sm:text-2xl'></i>
-                    </button>
-
                     <h2
                         className={`
                             hidden sm:block font-semibold text-base ml-2
@@ -84,10 +67,8 @@ export const Header: React.FC<Props> = ({ title }) => {
                 </div>
             </div>
 
-            {/* Right section */}
             <div className='flex items-center gap-2 sm:gap-3'>
 
-                {/* Theme button */}
                 <button
                     onClick={toggleTheme}
                     className={`

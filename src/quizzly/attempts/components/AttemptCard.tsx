@@ -33,39 +33,35 @@ export const AttemptCard: React.FC<CardProps> = ({
 
   return (
     <div className={`rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden ${isDarkTheme ? 'bg-slate-800' : 'bg-white'}`}>
-
-      <div
-        className="h-2 w-full"
-        style={{ backgroundColor: quiz?.color || '#6B7280' }}
-      />
-
       <button
         onClick={onToggle}
-        className={`w-full px-6 py-5 flex items-center justify-between transition-colors duration-200 ${isDarkTheme
+        className={`w-full px-4 sm:px-6 py-4 sm:py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 transition-colors duration-200 ${isDarkTheme
           ? 'hover:bg-slate-700'
           : 'hover:bg-slate-50'
         }`}
       >
-        <div className="flex items-center gap-6 flex-1">
-          <AttemptScoreCard
-            percentage={percentage}
-            score={attempt.result.score}
-            totalPoints={attempt.result.totalPoints}
-            getScoreColor={getScoreColor}
-          />
+        <div className="flex flex-col md:flex-row items-center gap-3 sm:gap-6 flex-1 w-full sm:w-auto">
+          <div className="shrink-0">
+            <AttemptScoreCard
+              percentage={percentage}
+              score={attempt.result.score}
+              totalPoints={attempt.result.totalPoints}
+              getScoreColor={getScoreColor}
+            />
+          </div>
 
-          <AttemptInfo
-            quiz={quiz!}
-            percentage={percentage}
-            completedAt={attempt.result.completedAt}
-            correctAnswers={correctAnswers}
-            totalQuestions={totalQuestions}
-            isDarkTheme={isDarkTheme}
-            getScoreBadgeColor={getScoreBadgeColor}
-          />
+          <div className="flex-1 min-w-0">
+            <AttemptInfo
+              quiz={quiz!}
+              percentage={percentage}
+              completedAt={attempt.result.completedAt}
+              correctAnswers={correctAnswers}
+              totalQuestions={totalQuestions}
+              isDarkTheme={isDarkTheme}
+              getScoreBadgeColor={getScoreBadgeColor}
+            />
+          </div>
         </div>
-
-        <i className={`bx bx-chevron-down text-slate-400 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}></i>
       </button>
 
       {isExpanded && (

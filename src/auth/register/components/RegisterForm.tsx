@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Label } from '../../../shared/components/Label'
 import { Input } from '../../../shared/components/Input'
 import { FormErrorMessage } from '../../../shared/components/FormErrorMessage'
 import { SubmitButton } from '../../../shared/components/SubmitButton'
-import { useAuth } from '../../../shared/hooks'
+import { useAuth, useTheme } from '../../../shared/hooks'
 import type { RegisterUserWithEmail } from '../../../interfaces/auth.interface'
 
 export const RegisterForm: React.FC = () => {
@@ -16,7 +16,9 @@ export const RegisterForm: React.FC = () => {
         formState: { errors }
     } = useForm<RegisterUserWithEmail>()
 
+    const [showPassword, setShowPassword] = useState<boolean>(false)
     const { registerUser } = useAuth()
+    const { isDarkTheme } = useTheme()
     
     const onRegisterUser = (data: RegisterUserWithEmail) => {
         registerUser( data )
@@ -65,20 +67,26 @@ export const RegisterForm: React.FC = () => {
 
             <div>
                 <Label text='Contraseña' />
-                <Input 
-                    type='password'
-                    placeholder='Ingrese su contraseña'
-                    {...register('password', {
-                        required: {
-                            value: true,
-                            message: 'La contraseña es obligatoria'
-                        },
-                        minLength: {
-                            value: 6,
-                            message: 'La contraseña debe tener al menos 6 caracteres'
-                        }
-                    })}
-                />
+                <div className='flex items-center gap-2'>
+                    <Input 
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder='Ingrese su contraseña'
+                        {...register('password', {
+                            required: {
+                                value: true,
+                                message: 'La contraseña es obligatoria'
+                            },
+                            minLength: {
+                                value: 6,
+                                message: 'La contraseña debe tener al menos 6 caracteres'
+                            }
+                        })}
+                    />
+                    <i 
+                        onClick={() => setShowPassword(!showPassword)} 
+                        className={`bxr bx-${showPassword ? 'eye-slash' : 'eye'} text-2xl ${isDarkTheme ? ' text-white placeholder-gray-400 focus:ring-blue-400' : 'bg-gray-100 text-gray-900 placeholder-gray-500 focus:ring-blue-500'}`}
+                    ></i>
+                </div>
                 {errors.password && <FormErrorMessage errorMessage={errors.password.message} />}
             </div>
 

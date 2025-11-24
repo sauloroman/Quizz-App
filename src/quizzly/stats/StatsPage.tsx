@@ -44,7 +44,6 @@ export const StatsPage: React.FC = () => {
                 {overallStats ? (
                     <>
 
-                        {/* ⭐ Mantengo exactamente tu diseño desktop */}
                         <div className="w-full">
                             <OverallStatsCards
                                 overallStats={overallStats}
@@ -52,7 +51,6 @@ export const StatsPage: React.FC = () => {
                             />
                         </div>
 
-                        {/* ⭐ Gráfico — responsivo en móvil, igual en desktop */}
                         <div className="w-full overflow-x-auto sm:overflow-visible">
                             {progressData && (
                                 <ProgressChart
@@ -62,7 +60,6 @@ export const StatsPage: React.FC = () => {
                             )}
                         </div>
 
-                        {/* ⭐ Rachas — mantenemos estilo original */}
                         <div className="w-full">
                             {progressData && (
                                 <StreaksCards
@@ -72,7 +69,6 @@ export const StatsPage: React.FC = () => {
                             )}
                         </div>
 
-                        {/* ⭐ Tabla — scroll solo en móvil */}
                         <div className="w-full overflow-x-auto sm:overflow-visible">
                             {quizStats && (
                                 <QuizStatsTable

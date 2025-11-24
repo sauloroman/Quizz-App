@@ -18,7 +18,7 @@ export const AttemptStats: React.FC<Props> = ({ isDarkTheme }) => {
                     <span className={`text-sm ${isDarkTheme ? 'text-gray-500' : 'text-gray-500'}`}> puntos </span>
                 </div>
             </div>
-            <div className={`h-12 w-px ${isDarkTheme ? 'bg-gray-600' : 'bg-gray-300'}`}></div>
+            <div className={`h-12 hidden lg:block w-px ${isDarkTheme ? 'bg-gray-600' : 'bg-gray-300'}`}></div>
             <div className='flex-1 flex items-center gap-10'>
                 <div
                     className='w-16 h-10 rounded-full flex items-center justify-center'

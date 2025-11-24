@@ -10,8 +10,9 @@ export const AttemptQuestion: React.FC = () => {
 
     return (
         <div className={`
+            w-[95%] mx-auto lg:w-full
             rounded-2xl border overflow-hidden 
-            transition-all duration-300 w-full
+            transition-all duration-300 
             ${isDarkTheme 
                 ? 'bg-linear-to-br from-gray-800 to-gray-900 border-gray-700 shadow-2xl shadow-gray-900/50' 
                 : 'bg-linear-to-br from-white to-gray-50 border-gray-200 shadow-xl shadow-gray-200/50'
@@ -52,7 +53,7 @@ export const AttemptQuestion: React.FC = () => {
                             <span className='text-lg'>{currentQuestion.question.points}</span>
                         </div>
                     </div>
-                    <p className={`text-3xl font-bold leading-relaxed ${
+                    <p className={`text-xl lg:text-3xl font-bold leading-relaxed ${
                         isDarkTheme ? 'text-gray-100' : 'text-gray-900'
                     }`}>
                         {currentQuestion.question.questionText}

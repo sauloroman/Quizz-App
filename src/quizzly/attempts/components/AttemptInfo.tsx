@@ -32,13 +32,13 @@ export const AttemptInfo: React.FC<InfoProps> = ({
     
   return (
     <div className="flex-1 text-left relative">
-      <div className="flex items-center gap-3 mb-2">
+      <div className="flex flex-col-reverse md:flew-row items-center gap-3 mb-2">
         <h3 className={`text-lg font-semibold ${isDarkTheme ? 'text-white' : 'text-slate-900'}`}>Quiz &mdash; {quiz?.title ?? ''}</h3>
         <span className={`px-3 py-1 rounded-full text-xs font-medium ${getScoreBadgeColor(percentage)}`}>
           {percentage >= 90 ? 'Excelente' : percentage >= 75 ? 'Bien' : percentage >= 60 ? 'Regular' : 'Necesita mejora'}
         </span>
       </div>
-      <div className={`flex items-center gap-4 text-sm ${isDarkTheme ? 'text-slate-400' : 'text-slate-600'}`}>
+      <div className={`flex flex-col items-center gap-4 text-sm ${isDarkTheme ? 'text-slate-400' : 'text-slate-600'}`}>
         <div className="flex items-center gap-1">
           <span>{formatDate(completedAt)}</span>
         </div>
