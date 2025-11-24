@@ -51,6 +51,13 @@ export const questionsSlice = createSlice({
 
         setCreatingNewQuestion: ( state, {payload}: PayloadAction<boolean>) => {
             state.creatingNewQuestion = payload
+        },
+
+        resetQuestionsState: ( state ) => {
+            state.questions = []
+            state.questionSelected = null
+            state.isLoading = false
+            state.creatingNewQuestion = false
         }
 
     }
@@ -64,4 +71,5 @@ export const {
     addQuestion,
     updateQuestion,
     deleteQuestion,
+    resetQuestionsState
 } = questionsSlice.actions

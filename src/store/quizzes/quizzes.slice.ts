@@ -45,6 +45,12 @@ export const quizzeSlice = createSlice({
 
         setQuizSelected: ( state, {payload}: PayloadAction<Quiz | null>) => {
             state.quizSelected = payload
+        },
+
+        resetQuizzesState: ( state ) => {
+            state.quizes = []
+            state.quizSelected = null
+            state.isLoading = false
         }
 
     }
@@ -57,4 +63,5 @@ export const {
     setQuizzes,
     setIsLoading,
     setQuizSelected,
+    resetQuizzesState
 } = quizzeSlice.actions

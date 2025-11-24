@@ -10,20 +10,9 @@ interface InfoProps {
   getScoreBadgeColor: (percentage: number) => string
 }
 
-const formatDate = (date: Date) => {
-  return new Intl.DateTimeFormat('es-MX', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  }).format(date)
-}
-
 export const AttemptInfo: React.FC<InfoProps> = ({
   quiz,
   percentage,
-  completedAt,
   correctAnswers,
   totalQuestions,
   isDarkTheme,
@@ -32,17 +21,14 @@ export const AttemptInfo: React.FC<InfoProps> = ({
     
   return (
     <div className="flex-1 text-left relative">
-      <div className="flex flex-col-reverse md:flew-row items-center gap-3 mb-2">
+      <div className="flex flex-col-reverse md:flew-row md:items-start items-center gap-3 mb-2">
         <h3 className={`text-lg font-semibold ${isDarkTheme ? 'text-white' : 'text-slate-900'}`}>Quiz &mdash; {quiz?.title ?? ''}</h3>
         <span className={`px-3 py-1 rounded-full text-xs font-medium ${getScoreBadgeColor(percentage)}`}>
           {percentage >= 90 ? 'Excelente' : percentage >= 75 ? 'Bien' : percentage >= 60 ? 'Regular' : 'Necesita mejora'}
         </span>
       </div>
       <div className={`flex flex-col items-center gap-4 text-sm ${isDarkTheme ? 'text-slate-400' : 'text-slate-600'}`}>
-        <div className="flex items-center gap-1">
-          <span>{formatDate(completedAt)}</span>
-        </div>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           <span>{correctAnswers} de {totalQuestions} correctas</span>
         </div>
       </div>

@@ -2,9 +2,14 @@ import type { Dispatch } from "@reduxjs/toolkit"
 import { loginWithEmailAndPassword, logoutFirebase, registerUserWithEmail, singInWithGoogle } from "../../config/firebase/provider"
 import { login, logout, setIsLoading } from "./auth.slice"
 import type { LoginWithEmailAndPassword, RegisterUserWithEmail } from "../../interfaces/auth.interface"
-import { setAlert } from "../ui/ui.slice"
+import { resetUIState, setAlert } from "../ui/ui.slice"
 import { AlertType } from "../../interfaces/ui.interface"
 import { formatErrorFromFirebase } from "../../shared/helpers/format-firebase-errors"
+import { resetQuestionsState } from "../questions/questions.slice"
+import { resetQuizzesState } from "../quizzes/quizzes.slice"
+import { resetAttemptsState } from "../attempts/attempts.slice"
+import { resetAttemptState } from "../attempt/attempt.slice"
+import { resetStatsState } from "../stats/stats.slice"
 
 export const startLoggingWithGoogle = () => {
     return async ( dispatch: Dispatch ) => {
@@ -105,6 +110,13 @@ export const startLoggingOutUser = () => {
             await logoutFirebase()
 
             dispatch(logout())
+            dispatch(resetAttemptState())
+            dispatch(resetAttemptsState())
+            dispatch(resetQuestionsState())
+            dispatch(resetQuizzesState())
+            dispatch(resetStatsState())
+            dispatch(resetUIState())
+
             dispatch(setAlert({
                 isOpen: true,
                 title: 'Cierre de sesión',

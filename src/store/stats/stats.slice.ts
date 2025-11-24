@@ -66,6 +66,14 @@ export const statsSlice = createSlice({
         resetError: (state) => {
             state.error = null
         },
+
+        resetStatsState: ( state ) => {
+            state.overallStats = null
+            state.quizStats = []
+            state.progressData = null
+            state.isLoading = false
+            state.error = null
+        }
     },
 })
 
@@ -78,6 +86,7 @@ export const {
     setError,
     clearStats,
     resetError,
+    resetStatsState
 } = statsSlice.actions
 
 export default statsSlice.reducer

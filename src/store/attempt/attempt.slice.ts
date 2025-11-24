@@ -86,6 +86,22 @@ export const attemptSlice = createSlice({
 
         resetCounterAccumulated: ( state ) => {
             state.counterAccumulated = 0
+        },
+
+        resetAttemptState: ( state ) => {
+            state.quizAttempt = null
+            state.questionsAttempt = []
+            state.currentQuestion = null
+            state.counterAccumulated = 0
+            state.currentQuestionNumber = 0
+            state.isCorrectAnswer = false
+            state.isResultVisible = false
+            state.isAttemptFinished = false
+            state.isLoading = false
+            state.quizzAttemptResult = {
+                result: null,
+                userAnswers: []
+            }
         }
 
     }
@@ -105,4 +121,5 @@ export const {
     setIsResultVisible,
     setIsAttemptFinished,
     setUserAnswer,
+    resetAttemptState
 } = attemptSlice.actions

@@ -6,6 +6,7 @@ import {
     ProgressChart,
     QuizStatsTable,
     StatsEmptyState,
+    StatsHeader,
     StreaksCards
 } from './components'
 import { Spinner } from '../../shared/components/Spinner'
@@ -40,10 +41,8 @@ export const StatsPage: React.FC = () => {
     return (
         <MainLayout title='Tus estadísticas'>
             <div className="space-y-6 pb-6">
-
                 {overallStats ? (
                     <>
-
                         <div className="w-full">
                             <OverallStatsCards
                                 overallStats={overallStats}

@@ -37,6 +37,20 @@ export const uiSlice = createSlice({
 
         setModal: ( state, { payload }: PayloadAction<Modal>) => {
             state.modal = payload
+        },
+
+        resetUIState: ( state ) => {
+            state.theme = Theme.dark
+            state.alert = {
+                isOpen: false,
+                text: '',
+                title: '',
+                type: AlertType.warning
+            },
+            state.modal = {
+                isOpen: false,
+                name: ModalNames.pending
+            }
         }
 
     }
@@ -46,4 +60,5 @@ export const {
     setTheme,
     setAlert,
     setModal,
+    resetUIState
 } = uiSlice.actions

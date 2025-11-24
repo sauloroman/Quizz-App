@@ -7,6 +7,7 @@ import { formatErrorFromFirebase } from "../../shared/helpers/format-firebase-er
 import { AlertType } from "../../interfaces/ui.interface";
 import { collection, doc, setDoc } from "firebase/firestore/lite";
 import { FirebaseDB } from "../../config/firebase/config";
+import { addAttempt } from "../attempts/attempts.slice";
 
 export const startCreatingAttempt = ( attemptData: Omit<CreateQuizAttempt, 'userId'>, userAnswers: CreateUserAnswer[] ) => {
     return async ( dispatch: Dispatch, getState: () => RootState ) => {
@@ -37,6 +38,17 @@ export const startCreatingAttempt = ( attemptData: Omit<CreateQuizAttempt, 'user
                 userAnswersArr.push( userAnswer )
             })
 
+            dispatch(addAttempt({
+                result: {
+                    id: attemptRef.id,
+                    userId: userId,
+                    quizId: attemptData.quizId,
+                    completedAt: attemptData.completedAt,
+                    score: attemptData.score,
+                    totalPoints: attemptData.score
+                },
+                userAnswers: userAnswersArr
+            }))
             dispatch(setIsAttemptFinished(true))
 
         } catch( error ){

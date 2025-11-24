@@ -18,6 +18,10 @@ export const attemptsSlice = createSlice({
     initialState: initialState,
     reducers: {
 
+        addAttempt: ( state, {payload}: PayloadAction<AttemptDBWithAnswers>) => {
+            state.attempts.unshift(payload)
+        },
+
         setAttempts: ( state, {payload}: PayloadAction<AttemptDBWithAnswers[]> ) => {
             state.attempts = payload
         },
@@ -28,6 +32,12 @@ export const attemptsSlice = createSlice({
 
         setIsLoading: ( state, {payload}: PayloadAction<boolean> ) => {
             state.isLoading = payload
+        },
+
+        resetAttemptsState: ( state ) => {
+            state.attempts = []
+            state.attemptSelected = null
+            state.isLoading = false 
         }
 
     }
@@ -36,5 +46,7 @@ export const attemptsSlice = createSlice({
 export const {
     setAttempts,
     setAttemptSelected,
-    setIsLoading
+    setIsLoading,
+    addAttempt,
+    resetAttemptsState,
 } = attemptsSlice.actions
