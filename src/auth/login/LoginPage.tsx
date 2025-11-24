@@ -1,20 +1,26 @@
+// LoginPage.tsx
 import React from 'react'
 import { AuthLayout } from '../../layout/AuthLayout'
 import { LoginForm } from './components/LoginForm'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../../shared/hooks'
+import { useAuth, useTheme } from '../../shared/hooks'
 import { Spinner } from '../../shared/components/Spinner'
 
 export const LoginPage: React.FC = () => {
   const { isLoading } = useAuth()
+  const { isDarkTheme } = useTheme()
 
   return (
     <AuthLayout>
       <div className='relative h-screen w-full flex flex-col justify-center items-center lg:flex-none'>
         <div className='absolute lg:w-[80%] mx-auto -mt-10 lg:-mb-20'>
-          <header className='flex flex-col gap-2 mb-8 text-gray-200'>
-            <h1 className='text-3xl font-bold '>Bievenido de vuelta</h1>
-            <p>Ingresa a Quizzly con tus credenciales y comienza a estudiar</p>
+          <header className={`flex flex-col gap-2 mb-8 ${isDarkTheme ? 'text-slate-200' : 'text-gray-200'}`}>
+            <h1 className={`text-3xl font-bold ${isDarkTheme ? 'text-white' : 'text-gray-900'}`}>
+              Bienvenido de vuelta
+            </h1>
+            <p className={isDarkTheme ? 'text-slate-400' : 'text-gray-600'}>
+              Ingresa a Quizzly con tus credenciales y comienza a estudiar
+            </p>
           </header>
           {
             isLoading
@@ -23,7 +29,12 @@ export const LoginPage: React.FC = () => {
                 <>
                   <LoginForm />
                   <div className='mt-5 text-right'>
-                    <Link className='text-blue-400' to={'/auth/register'}>No tengo una cuenta</Link>
+                    <Link 
+                      className={`${isDarkTheme ? 'text-blue-400 hover:text-blue-300' : 'text-blue-500 hover:text-blue-600'} transition-colors`}
+                      to={'/auth/register'}
+                    >
+                      No tengo una cuenta
+                    </Link>
                   </div>
                 </>
               )

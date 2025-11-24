@@ -38,7 +38,7 @@ export const Menu: React.FC = () => {
             className={`
                 w-full
                 rounded-lg p-8 transition-colors duration-200 
-                ${isDarkTheme ? 'bg-gray-800' : 'bg-white'}
+                ${isDarkTheme ? 'bg-gray-800' : 'bg-white border-2 border-gray-300'}
             `}
         >
             <h2
@@ -60,14 +60,12 @@ export const Menu: React.FC = () => {
                                 transition-all duration-200 cursor-pointer
                                 hover:shadow-lg hover:scale-[1.03]
                                 focus:outline-none focus:ring-2 focus:ring-offset-2
-
                                 ${isDarkTheme
-                                    ? 'bg-gray-700 hover:bg-gray-600 text-white focus:ring-gray-500'
-                                    : 'bg-gray-50 hover:bg-gray-100 text-gray-900 focus:ring-orange-600'
+                                    ? 'bg-gray-700 hover:bg-gray-500 text-white focus:ring-gray-500'
+                                    : 'bg-gray-100 hover:bg-gray-100 text-gray-900 focus:ring-orange-600'
                                 }
                             `}
                         >
-                            {/* Icon container */}
                             <div
                                 className="flex items-center justify-center w-12 h-12 rounded-lg"
                                 style={{
@@ -80,7 +78,6 @@ export const Menu: React.FC = () => {
                                 ></i>
                             </div>
 
-                            {/* Name */}
                             <span className="font-semibold text-lg">
                                 {option.name}
                             </span>

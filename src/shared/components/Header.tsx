@@ -1,7 +1,8 @@
 import React from 'react'
 import { useAuth, useTheme } from '../hooks'
-import logoDark from '../../assets/img/logo-dark-mode.png'
 import { NavLink } from 'react-router-dom'
+import logoDark from '../../assets/img/logo-dark-mode.png'
+import logoLight from '../../assets/img/logo-light-mode.png'
 
 interface Props {
     title: string
@@ -26,7 +27,7 @@ export const Header: React.FC<Props> = ({ title }) => {
                 backdrop-blur-md
                 border-b
                 ${isDarkTheme
-                    ? 'bg-gray-900/80 border-gray-800 shadow-2xl shadow-black/20'
+                    ? 'bg-gray-900 border-gray-800 shadow-2xl shadow-black/20'
                     : 'bg-white/80 border-gray-200 shadow-lg shadow-gray-200/20'
                 }
             `}
@@ -36,7 +37,7 @@ export const Header: React.FC<Props> = ({ title }) => {
 
                 <img
                     className='h-8 sm:h-9 transition-transform hover:scale-105'
-                    src={isDarkTheme ? logoDark : ''}
+                    src={isDarkTheme ? logoDark : logoLight}
                     alt='Quizzly App'
                 />
 

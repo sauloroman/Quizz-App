@@ -18,7 +18,7 @@ export const QuizzHeaderQuestionsCounter: React.FC<Props> = ({ quizColor, questi
         ? 'bg-gray-800 border-gray-700'
         : 'bg-white border-gray-200'
     }`}>
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
         <div className='w-full'>
           <h2 className={`text-2xl font-bold mb-1 ${
             isDarkTheme ? 'text-white' : 'text-gray-900'
@@ -36,7 +36,7 @@ export const QuizzHeaderQuestionsCounter: React.FC<Props> = ({ quizColor, questi
             </span>
           </p>
         </div>
-        <div className='w-64'>
+        <div className='w-full flex justify-end'>
           <SubmitButton 
             onClick={() => activateNewQuestionArea(!creatingNewQuestion)}
             style={{ backgroundColor: quizColor }}

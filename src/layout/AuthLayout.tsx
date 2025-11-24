@@ -2,6 +2,7 @@ import React from 'react'
 import { useTheme } from '../shared/hooks'
 import { Slides } from '../shared/components/Slides'
 import logoDark from '../assets/img/logo-dark-mode.png'
+import logoLight from '../assets/img/logo-light-mode.png'
 
 interface Props {
     children: React.ReactNode
@@ -17,8 +18,8 @@ export const AuthLayout: React.FC<Props> = ({ children }) => {
             content-center
             transition-colors duration-200
             ${isDarkTheme 
-                ? 'bg-[#2c3e50]' 
-                : 'bg-gray-50'
+                ? 'bg-gray-900' 
+                : 'bg-white'
             }
         `}>
             <div className='lg:col-span-3 relative p-8 overflow-hidden h-screen'>
@@ -27,7 +28,7 @@ export const AuthLayout: React.FC<Props> = ({ children }) => {
                     translate-x-[-50%] translate-y-[-50%] z-0
                     transition-colors duration-200
                     ${isDarkTheme 
-                        ? 'bg-[#3d4f5c]' 
+                        ? 'bg-gray-700' 
                         : 'bg-blue-100'
                     }
                 `}></div>
@@ -36,14 +37,14 @@ export const AuthLayout: React.FC<Props> = ({ children }) => {
                     translate-x-[50%] translate-y-[50%] z-0
                     transition-colors duration-200
                     ${isDarkTheme 
-                        ? 'bg-[#3d4f5c]' 
-                        : 'bg-purple-100'
+                        ? 'bg-gray-700' 
+                        : 'bg-purple-300'
                     }
                 `}></div>
                 <div className='absolute top-5 right-10'>
                     <img
                         className='w-24' 
-                        src={logoDark} 
+                        src={isDarkTheme ? logoDark : logoLight} 
                         alt='Logo Quizzly' 
                     />
                 </div>

@@ -13,7 +13,7 @@ export const Quizzes: React.FC = () => {
   return (
     <MainLayout title='Tus Creaciones'>
 
-      <div className='flex justify-between items-center'>
+      <div className='w-full flex flex-col lg:flex-row mb-5 justify-between items-center'>
         <div className="mb-6">
           <h1 className={`text-3xl font-bold ${
             isDarkTheme ? 'text-gray-100' : 'text-gray-900'

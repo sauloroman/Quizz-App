@@ -18,7 +18,7 @@ export const Input: React.FC<Props> = ({ className = '', ...props }) => {
                 focus:outline-none focus:ring-2 focus:ring-opacity-50
                 ${isDarkTheme 
                     ? 'bg-[#3d4f5c] text-white placeholder-gray-400 focus:ring-blue-400' 
-                    : 'bg-gray-100 text-gray-900 placeholder-gray-500 focus:ring-blue-500'
+                    : 'bg-gray-100 text-gray-900 placeholder-gray-500 focus:ring-blue-500 border border-gray-400'
                 }
                 ${className}
             `}

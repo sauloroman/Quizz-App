@@ -52,7 +52,7 @@ export const QuizzCreateQuestionForm: React.FC = () => {
     `
 
     const answerItemClasses = `
-        flex flex-col md:flex-row items-center gap-3 p-3 rounded-lg border transition-colors
+        items-center gap-3 p-3 rounded-lg border transition-colors
         ${isDarkTheme
             ? 'bg-gray-800 border-gray-700 hover:border-gray-600'
             : 'bg-white border-gray-200 hover:border-gray-300'}
@@ -103,20 +103,23 @@ export const QuizzCreateQuestionForm: React.FC = () => {
 
                 <div className="space-y-3">
                     {fields.map((field, index) => (
-                        <div key={field.id} className={answerItemClasses}>
+                        <div key={field.id} className={`${answerItemClasses}`}>
 
-                            <div className="shrink-0">
-                                <InputRadio
-                                    {...register('correctAnswer', { required: true })}
-                                    value={index}
-                                />
+                            <div className='flex items-center gap-3'>
+                                <div className="shrink-0">
+                                    <InputRadio
+                                        {...register('correctAnswer', { required: true })}
+                                        value={index}
+                                    />
+                                </div>
+
+                                <label className={`${answerLabelClasses}`}>
+                                    Opción {index + 1}
+                                </label>
                             </div>
 
-                            <label className={answerLabelClasses}>
-                                Opción {index + 1}
-                            </label>
 
-                            <div className="flex-1">
+                            <div className="flex-1 mt-3">
                                 <Input
                                     {...register(`answers.${index}.answerText`, {
                                         required: 'La respuesta es obligatoria'
@@ -129,6 +132,7 @@ export const QuizzCreateQuestionForm: React.FC = () => {
                                     />
                                 )}
                             </div>
+
                         </div>
                     ))}
                 </div>
